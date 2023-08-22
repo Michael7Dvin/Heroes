@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9da153f3cf314bc895172fe71cffce13, type: 3}
   m_Name: All Scenes Data
   m_EditorClassIdentifier: 
-  <BattleField>k__BackingField: {fileID: 0}
+  <BattleField>k__BackingField: {fileID: 11400000, guid: 476113c8a9347e14582588d9eee9fee4, type: 2}

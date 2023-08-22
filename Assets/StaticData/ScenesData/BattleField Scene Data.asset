@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BattleField Scene Data
   m_EditorClassIdentifier: 
   <AssetReference>k__BackingField:
-    m_AssetGUID: 
+    m_AssetGUID: 5754e60f678daad40a28111112500fde
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
