@@ -1,4 +1,8 @@
-﻿using CodeBase.Infrastructure.GameFSM.FSM;
+﻿using CodeBase.Gameplay.Services.GroupFactory;
+using CodeBase.Gameplay.Services.GroupsProvider;
+using CodeBase.Gameplay.Services.RandomService;
+using CodeBase.Gameplay.Services.TurnQueue;
+using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.SceneLoading;
@@ -15,8 +19,11 @@ namespace CodeBase.Infrastructure.Installers
         public override void InstallBindings()
         {
             BindGameStateMachine();
+            
             BindStaticDataProvider();
-            BindServices();
+            BindInfrastructureServices();
+            
+            BindGameplayServices();
         }
 
         private void BindGameStateMachine()
@@ -38,10 +45,18 @@ namespace CodeBase.Infrastructure.Installers
                 .WithArguments(_allScenesData);
         }
 
-        private void BindServices()
+        private void BindInfrastructureServices()
         {
             Container.Bind<ICustomLogger>().To<CustomLogger>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
+        }
+
+        private void BindGameplayServices()
+        {
+            Container.Bind<IGroupFactory>().To<GroupFactory>().AsSingle();
+            Container.Bind<IRandomService>().To<RandomService>().AsSingle();
+            Container.Bind<ITurnQueue>().To<TurnQueue>().AsSingle();
+            Container.Bind<IGroupsProvider>().To<GroupsProvider>().AsSingle();
         }
     }
 }
