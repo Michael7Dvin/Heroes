@@ -4,7 +4,7 @@ namespace CodeBase.Gameplay.Services.GroupFactory
 {
     public interface IGroupFactory
     {
-        Group Create(UnitType unitType, int initiative);
+        UnitsGroup Create(UnitType unitType, int initiative);
 
     }
 }

@@ -12,8 +12,8 @@ namespace CodeBase.Gameplay.Services.TurnQueue
         private readonly IGroupsProvider _groupsProvider;
         private readonly ICustomLogger _logger;
 
-        private readonly LinkedList<Group> _groups = new();
-        private LinkedListNode<Group> _activeGroupNode;
+        private readonly LinkedList<UnitsGroup> _groups = new();
+        private LinkedListNode<UnitsGroup> _activeGroupNode;
 
         public TurnQueue(IRandomService randomService, IGroupsProvider groupsProvider, ICustomLogger logger)
         {
@@ -22,8 +22,8 @@ namespace CodeBase.Gameplay.Services.TurnQueue
             _logger = logger;
         }
 
-        public IEnumerable<Group> Groups => _groups;
-        public Group ActiveGroup => _activeGroupNode.Value;
+        public IEnumerable<UnitsGroup> Groups => _groups;
+        public UnitsGroup ActiveUnitsGroup => _activeGroupNode.Value;
         
         public void Initialize()
         {
@@ -46,22 +46,23 @@ namespace CodeBase.Gameplay.Services.TurnQueue
                 _activeGroupNode = _groups.Last;
             else
                 _activeGroupNode = _activeGroupNode.Previous;
+            
         }
-
+        
         public void SetFirstTurnActiveGroup() => 
             _activeGroupNode = _groups.Last;
         
-        private void Add(Group group)
+        private void Add(UnitsGroup unitsGroup)
         {
             if (_groups.Count == 0)
             {
-                _groups.AddFirst(group);
+                _groups.AddFirst(unitsGroup);
                 return;
             }
             
-            int newGroupInitiative = group.Initiative;
+            int newGroupInitiative = unitsGroup.Initiative;
             
-            LinkedListNode<Group> currentNode = _groups.First;
+            LinkedListNode<UnitsGroup> currentNode = _groups.First;
 
             while (currentNode != null)
             {
@@ -71,20 +72,20 @@ namespace CodeBase.Gameplay.Services.TurnQueue
                 {
                     if (_randomService.DoFiftyFifty() == false)
                     {
-                        _groups.AddBefore(currentNode, group);
+                        _groups.AddBefore(currentNode, unitsGroup);
                         return;
                     }
                 }
 
                 if (newGroupInitiative < currentNodeGroupInitiative)
                 {
-                    _groups.AddBefore(currentNode, group);
+                    _groups.AddBefore(currentNode, unitsGroup);
                     return;
                 }
 
                 if (currentNode == _groups.Last)
                 {
-                    _groups.AddLast(group);
+                    _groups.AddLast(unitsGroup);
                     return;
                 }
 
@@ -92,12 +93,12 @@ namespace CodeBase.Gameplay.Services.TurnQueue
             }
         }
 
-        private  void Remove(Group group)
+        private  void Remove(UnitsGroup unitsGroup)
         {
-            if (group == _activeGroupNode.Value)
-                _logger.LogError($"Unable to remove {nameof(ActiveGroup)}. Feature not implemented");
+            if (unitsGroup == _activeGroupNode.Value)
+                _logger.LogError($"Unable to remove {nameof(ActiveUnitsGroup)}. Feature not implemented");
 
-            _groups.Remove(group);
+            _groups.Remove(unitsGroup);
         }
     }
 }

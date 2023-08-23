@@ -6,28 +6,28 @@ namespace CodeBase.Gameplay.Services.GroupsProvider
 {
     public class GroupsProvider : IGroupsProvider
     {
-        private readonly List<Group> _groups = new();
+        private readonly List<UnitsGroup> _groups = new();
         
-        public event Action<Group> Added;
-        public event Action<Group> Removed;
+        public event Action<UnitsGroup> Added;
+        public event Action<UnitsGroup> Removed;
         
-        public void Add(Group group)
+        public void Add(UnitsGroup unitsGroup)
         {
-            _groups.Add(group);
-            group.Died += OnGroupDied;
-            Added?.Invoke(group);
+            _groups.Add(unitsGroup);
+            unitsGroup.Died += OnGroupDied;
+            Added?.Invoke(unitsGroup);
 
             void OnGroupDied()
             {
-                group.Died -= OnGroupDied;
-                Remove(group);
+                unitsGroup.Died -= OnGroupDied;
+                Remove(unitsGroup);
             }
         }
 
-        private void Remove(Group group)
+        private void Remove(UnitsGroup unitsGroup)
         {
-            _groups.Remove(group);
-            Removed?.Invoke(group);
+            _groups.Remove(unitsGroup);
+            Removed?.Invoke(unitsGroup);
         }
     }
 }

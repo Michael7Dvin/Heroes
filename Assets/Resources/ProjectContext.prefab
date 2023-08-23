@@ -75,3 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _allScenesData: {fileID: 11400000, guid: 3c0ab70f4ce0ad14a95dfe9bc13dba33, type: 2}
+  _allAssetsAddresses: {fileID: 11400000, guid: bb526f0122c6f154a9ca793fd2e3e023, type: 2}

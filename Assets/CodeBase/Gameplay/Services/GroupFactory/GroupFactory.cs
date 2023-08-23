@@ -12,11 +12,11 @@ namespace CodeBase.Gameplay.Services.GroupFactory
             _groupsProvider = groupsProvider;
         }
 
-        public Group Create(UnitType unitType, int initiative)
+        public UnitsGroup Create(UnitType unitType, int initiative)
         {
-            Group group = new Group(unitType, initiative);
-            _groupsProvider.Add(group);
-            return group;
+            UnitsGroup unitsGroup = new UnitsGroup(unitType, initiative);
+            _groupsProvider.Add(unitsGroup);
+            return unitsGroup;
         }
     }
 }

@@ -2,9 +2,9 @@
 
 namespace CodeBase.Gameplay.Groups
 {
-    public class Group
+    public class UnitsGroup
     {
-        public Group(UnitType unitType, int initiative)
+        public UnitsGroup(UnitType unitType, int initiative)
         {
             UnitType = unitType;
             Initiative = initiative;
