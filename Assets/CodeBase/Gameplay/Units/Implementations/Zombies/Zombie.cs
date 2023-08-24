@@ -1,10 +1,8 @@
-using UnityEngine;
-
 namespace CodeBase.Gameplay.Units.Implementations.Zombies
 {
     public class Zombie : Unit
     {
-        public Zombie(int count, TeamID teamID, int initiative) : base(count, teamID, initiative)
+        public Zombie(int count, TeamID teamID, int initiative, int health, int damage) : base(count, teamID, initiative, health, damage)
         {
         }
 

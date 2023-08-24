@@ -14,6 +14,6 @@ namespace CodeBase.Gameplay.Units
         [field: SerializeField] public ArcherConfig Archer { get; private set; }
         [field: SerializeField] public ZombieConfig Zombie { get; private set; }
         [field: SerializeField] public SkeletonNecromancerConfig SkeletonNecromancer { get; private set; }
-        [field: SerializeField] public SkeletonConfig Skeletons { get; private set; }
+        [field: SerializeField] public SkeletonConfig Skeleton { get; private set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class Knight : Unit
     {
-        public Knight(int count, TeamID teamID, int initiative) : base(count, teamID, initiative)
+        public Knight(int count, TeamID teamID, int initiative, int health, int damage) : base(count, teamID, initiative, health, damage)
         {
         }
 

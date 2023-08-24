@@ -72,40 +72,75 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
         private async UniTask<Knight> CreateKnight(Vector3 position, int unitsCount, TeamID teamID)
         {
-            Knight knight = new(unitsCount, teamID, _configs.Knight.Initiative);
-            GameObject gameObject = await CreateView(position, knight, _allAssetsAddresses.UnitsAddresses.Knight);
+            int initiative = _configs.Knight.Initiative;
+            int health = _configs.Knight.Health;
+            int damage = _configs.Knight.Damage;
+            
+            Knight knight = new(unitsCount, teamID, initiative, health, damage);
+            
+            AssetReferenceGameObject view = _allAssetsAddresses.UnitsAddresses.Knight;
+            GameObject gameObject = await CreateView(position, knight, view);
+            
             knight.Construct(gameObject);
             return knight;
         }
 
         private async UniTask<Archer> CreateArcher(Vector3 position, int unitsCount, TeamID teamID)
         {
-            Archer archer = new(unitsCount, teamID, _configs.Archer.Initiative);
-            GameObject gameObject = await CreateView(position, archer, _allAssetsAddresses.UnitsAddresses.Archer);
+            int initiative = _configs.Archer.Initiative;
+            int health = _configs.Archer.Health;
+            int damage = _configs.Archer.Damage;
+            
+            Archer archer = new(unitsCount, teamID, initiative, health, damage);
+            
+            AssetReferenceGameObject viewAddress = _allAssetsAddresses.UnitsAddresses.Archer;
+            GameObject gameObject = await CreateView(position, archer, viewAddress);
+            
             archer.Construct(gameObject);
             return archer;
         }
 
         private async UniTask<Zombie> CreateZombie(Vector3 position, int unitsCount, TeamID teamID)
         {
-            Zombie zombie = new(unitsCount, teamID, _configs.Zombie.Initiative);
-            GameObject gameObject = await CreateView(position, zombie, _allAssetsAddresses.UnitsAddresses.Zombie);
+            int initiative = _configs.Zombie.Initiative;
+            int health = _configs.Zombie.Health;
+            int damage = _configs.Zombie.Damage;
+            
+            Zombie zombie = new(unitsCount, teamID, initiative, health, damage);
+            
+            AssetReferenceGameObject viewAddress = _allAssetsAddresses.UnitsAddresses.Zombie;
+            GameObject gameObject = await CreateView(position, zombie, viewAddress);
+            
             zombie.Construct(gameObject);
             return zombie;
         }
 
         private async UniTask<SkeletonNecromancer> CreateSkeletonNecromancer(Vector3 position, int unitsCount, TeamID teamID)
         {
-            SkeletonNecromancer skeletonNecromancer = new(unitsCount, teamID, _configs.SkeletonNecromancer.Initiative);
-            GameObject gameObject = await CreateView(position, skeletonNecromancer, _allAssetsAddresses.UnitsAddresses.SkeletonNecromancer);
+            int initiative = _configs.SkeletonNecromancer.Initiative;
+            int health = _configs.SkeletonNecromancer.Health;
+            int damage = _configs.SkeletonNecromancer.Damage;
+            
+            SkeletonNecromancer skeletonNecromancer = new(unitsCount, teamID, initiative, health, damage);
+            
+            AssetReferenceGameObject viewAddress = _allAssetsAddresses.UnitsAddresses.SkeletonNecromancer;
+            GameObject gameObject = await CreateView(position, skeletonNecromancer, viewAddress);
+            
             skeletonNecromancer.Construct(gameObject);
             return skeletonNecromancer;
         }
 
         private async UniTask<Skeleton> CreateSkeleton(Vector3 position, int unitsCount, TeamID teamID)
         {
-            Skeleton skeleton = new(unitsCount, teamID, _configs.Skeletons.Initiative);
-            GameObject gameObject = await CreateView(position, skeleton, _allAssetsAddresses.UnitsAddresses.Skeleton);
+            int initiative = _configs.Skeleton.Initiative;
+            int health = _configs.Skeleton.Health;
+            int damage = _configs.Skeleton.Damage;
+            
+            Skeleton skeleton = new(unitsCount, teamID, initiative, health, damage);
+            
+            AssetReferenceGameObject viewAddress = _allAssetsAddresses.UnitsAddresses.Skeleton;
+            GameObject gameObject = await CreateView(position, skeleton, viewAddress);
+            
             skeleton.Construct(gameObject);
             return skeleton;
         }
@@ -119,7 +154,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             view.Construct(unit);
 
             UnitCounter counter = gameObject.GetComponentInChildren<UnitCounter>();
-            counter.Construct(unit.Count, unit.TeamID);
+            counter.Construct(unit.Amount, unit.TeamID);
 
             return gameObject;
         }

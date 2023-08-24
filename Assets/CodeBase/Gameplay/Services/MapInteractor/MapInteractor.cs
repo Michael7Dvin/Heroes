@@ -34,13 +34,19 @@ namespace CodeBase.Gameplay.Services.MapInteractor
 
             if (_mapService.TryGetCellCoordinates(clickPosition, out Vector3Int coordinates) == true)
             {
-                if (_mapService.TryGetUnitAtTile(coordinates, out Unit unit) == true)
+                Unit activeUnit = _turnQueue.ActiveUnit;
+
+                if (_mapService.TryGetUnitAtTile(coordinates, out Unit unitAtTile) == true)
                 {
-                    
+                    TeamID activeUnitTeamID = activeUnit.TeamID.Value;
+                    TeamID unitAtTileTeamID = unitAtTile.TeamID.Value;
+
+                    if (activeUnitTeamID != unitAtTileTeamID) 
+                        activeUnit.Attack(unitAtTile);
                 }
                 else
                 {
-                    _mover.Move(coordinates, _turnQueue.ActiveUnit);
+                    _mover.Move(coordinates, activeUnit);
                 }
             }
         }
