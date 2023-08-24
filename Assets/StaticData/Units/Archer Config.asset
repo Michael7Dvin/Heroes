@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ec4a8ad7bb4a92a2d49552c19edc0d, type: 3}
   m_Name: Archer Config
   m_EditorClassIdentifier: 
-  <Initiative>k__BackingField: 0
+  <Initiative>k__BackingField: 6

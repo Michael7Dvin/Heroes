@@ -17,3 +17,14 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  <EmptyGameObject>k__BackingField:
+    m_AssetGUID: ba346cc4f74bbc54281e2dc492e07359
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 1
+  <Camera>k__BackingField:
+    m_AssetGUID: ba346cc4f74bbc54281e2dc492e07359
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  <UnitsAddresses>k__BackingField: {fileID: 11400000, guid: 3e55a73805766f240bff86307447f31e, type: 2}

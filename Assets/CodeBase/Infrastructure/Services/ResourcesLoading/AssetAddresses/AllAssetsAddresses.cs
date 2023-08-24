@@ -7,7 +7,9 @@ namespace CodeBase.Infrastructure.Services.ResourcesLoading.AssetAddresses
     public class AllAssetsAddresses : ScriptableObject
     {
         [field: SerializeField] public AssetReferenceGameObject HexagonTileGrid { get; private set; }
+        [field: SerializeField] public AssetReferenceGameObject EmptyGameObject { get; private set; }
+        [field: SerializeField] public AssetReferenceGameObject Camera { get; private set; }
         
-        [field: SerializeField] public UIAddresses UIAddresses { get; private set; }
+        [field: SerializeField] public UnitsAddresses UnitsAddresses { get; private set; }
     }
 }

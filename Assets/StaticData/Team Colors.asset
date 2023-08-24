@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eff6a5b187c245a1a86b561041a8c935, type: 3}
   m_Name: Team Colors
   m_EditorClassIdentifier: 
-  <HumansFillColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
-  <UndeadsFillColor>k__BackingField: {r: 0, g: 0, b: 0, a: 0}
+  <HumansFillColor>k__BackingField: {r: 0.099857606, g: 0.46655798, b: 0.6415094, a: 1}
+  <UndeadsFillColor>k__BackingField: {r: 0.3387256, g: 0.21026166, b: 0.7075472, a: 1}

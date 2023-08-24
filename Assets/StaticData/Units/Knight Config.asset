@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a95bbb94a094ad79e6e1f34a5c5f698, type: 3}
   m_Name: Knight Config
   m_EditorClassIdentifier: 
-  <Initiative>k__BackingField: 0
+  <Initiative>k__BackingField: 4

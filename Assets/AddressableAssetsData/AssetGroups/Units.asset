@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Units
+  m_EditorClassIdentifier: 
+  m_GroupName: Units
+  m_Data:
+    m_SerializedData: []
+  m_GUID: a62f0c1aa798c8042aa6b153ac6094f5
+  m_SerializeEntries:
+  - m_GUID: 50c4226abf83e5a4684336569a97e148
+    m_Address: Skeleton
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2fd86f3afe5836149a5a64b82f592e5b
+    m_Address: SkeletonNecromancer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: acfbb9a9d3b5edb44b7bd05d797054c8
+    m_Address: Archer
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 55059a541042b1847bf468d7aa88b0ec
+    m_Address: Zombies
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e2028e2df2620f74a82a42f858d4dc57
+    m_Address: Knight
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 2d5a25dbbfed77a4ab5f04549198ef61, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: dcb53b7604a3bf041814bb6378d2ec5e, type: 2}
+    - {fileID: 11400000, guid: 8336aeaf929ecb94e96f677908c2a1bb, type: 2}

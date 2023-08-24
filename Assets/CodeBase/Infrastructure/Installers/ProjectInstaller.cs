@@ -1,11 +1,18 @@
 ﻿using CodeBase.Gameplay.Level;
+using CodeBase.Gameplay.Services.MapInteractor;
+using CodeBase.Gameplay.Services.MapService;
+using CodeBase.Gameplay.Services.Mover;
 using CodeBase.Gameplay.Services.RandomService;
-using CodeBase.Gameplay.Services.TileMapService;
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Services.UnitsSpawner;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States;
+using CodeBase.Infrastructure.Services.CameraFactory;
+using CodeBase.Infrastructure.Services.CameraProvider;
+using CodeBase.Infrastructure.Services.CurrentSceneProvider;
+using CodeBase.Infrastructure.Services.InputService;
+using CodeBase.Infrastructure.Services.Instantiator;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.ResourcesLoading;
 using CodeBase.Infrastructure.Services.ResourcesLoading.AssetAddresses;
@@ -61,15 +68,21 @@ namespace CodeBase.Infrastructure.Installers
 
         private void BindInfrastructureServices()
         {
+            Container.Bind<IObjectsInstantiator>().To<ObjectsInstantiator>().AsSingle();
             Container.Bind<ICustomLogger>().To<CustomLogger>().AsSingle();
-            Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
             Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
+            Container.Bind<IInputService>().To<InputService>().AsSingle();
             
+            Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
+            Container.Bind<IActiveSceneProvider>().To<ActiveSceneProvider>().AsSingle();
+
             Container.Bind<IUnitFactory>().To<UnitsFactory>().AsSingle();
             Container.Bind<IUnitsProvider>().To<UnitsProvider>().AsSingle();
             
             Container.Bind<ITileMapFactory>().To<TileMapFactory>().AsSingle();
 
+            Container.Bind<ICameraFactory>().To<CameraFactory>().AsSingle();
+            Container.Bind<ICameraProvider>().To<CameraProvider>().AsSingle();
         }
 
         private void BindGameplayServices()
@@ -78,6 +91,8 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<IRandomService>().To<RandomService>().AsSingle();
             Container.Bind<ITurnQueue>().To<TurnQueue>().AsSingle();
             Container.Bind<IMapService>().To<MapService>().AsSingle();
+            Container.Bind<IMapInteractor>().To<MapInteractor>().AsSingle();
+            Container.Bind<IMover>().To<Mover>().AsSingle();
         }
     }
 }

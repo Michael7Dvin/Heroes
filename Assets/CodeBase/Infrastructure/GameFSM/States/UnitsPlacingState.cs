@@ -1,5 +1,6 @@
 ﻿using CodeBase.Gameplay;
 using CodeBase.Gameplay.Level;
+using CodeBase.Gameplay.Services.MapService;
 using CodeBase.Gameplay.Services.UnitsSpawner;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.GameFSM.FSM;
@@ -12,7 +13,7 @@ namespace CodeBase.Infrastructure.GameFSM.States
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IUnitsSpawner _spawner;
-
+        
         public UnitsPlacingState(IGameStateMachine gameStateMachine, IUnitsSpawner spawner)
         {
             _gameStateMachine = gameStateMachine;
@@ -21,8 +22,6 @@ namespace CodeBase.Infrastructure.GameFSM.States
 
         public async void Enter(LevelConfig levelConfig)
         {
-            
-            
             foreach (UnitPlacementConfig unit in levelConfig.Units)
             {
                 Vector3Int position = new Vector3Int(unit.Position.x, unit.Position.y, 0);

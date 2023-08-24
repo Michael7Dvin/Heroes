@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using CodeBase.Infrastructure.Services.CurrentSceneProvider;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.StaticDataProviding;
 using Cysharp.Threading.Tasks;
@@ -10,15 +11,20 @@ namespace CodeBase.Infrastructure.Services.SceneLoading
 {
     public class SceneLoader : ISceneLoader
     {
+        private readonly IActiveSceneProvider _activeSceneProvider;
+        private readonly ICustomLogger _logger;
+        private readonly AllScenesData _allScenesData;
+        
         private Dictionary<SceneID, AssetReference> _scenes;
         
-        private readonly AllScenesData _allScenesData;
-        private readonly ICustomLogger _logger;
-
-        public SceneLoader(IStaticDataProvider staticDataProvider, ICustomLogger logger)
+        public SceneLoader(IActiveSceneProvider activeSceneProvider,
+            ICustomLogger logger,
+            IStaticDataProvider staticDataProvider)
         {
-            _allScenesData = staticDataProvider.ScenesData;
+            _activeSceneProvider = activeSceneProvider;
             _logger = logger;
+            
+            _allScenesData = staticDataProvider.ScenesData;
         }
 
         public void Initialize()
@@ -55,6 +61,7 @@ namespace CodeBase.Infrastructure.Services.SceneLoading
             
             AsyncOperationHandle<SceneInstance> handle = Addressables.LoadSceneAsync(sceneReference);
             await handle.Task;
+            _activeSceneProvider.ResetActiveScene(handle.Result.Scene);
         }
     }
 }

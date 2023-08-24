@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea5fa526dd348049c7bf743ac21ce68, type: 3}
   m_Name: All Units Configs
   m_EditorClassIdentifier: 
-  <Knight>k__BackingField: {fileID: 0}
-  <Archer>k__BackingField: {fileID: 0}
-  <Zombie>k__BackingField: {fileID: 0}
-  <SkeletonNecromancer>k__BackingField: {fileID: 0}
-  <Skeletons>k__BackingField: {fileID: 0}
+  <Knight>k__BackingField: {fileID: 11400000, guid: 623c93247912c9a4f95bd179152ce36b, type: 2}
+  <Archer>k__BackingField: {fileID: 11400000, guid: 43c5586ddf2a1b6448a2f2f5350e564d, type: 2}
+  <Zombie>k__BackingField: {fileID: 11400000, guid: 3c4a3e36bde3b7d448b479a06a48f6bb, type: 2}
+  <SkeletonNecromancer>k__BackingField: {fileID: 11400000, guid: 31c346dd2995e9b42935971b105c7934, type: 2}
+  <Skeletons>k__BackingField: {fileID: 11400000, guid: 9a080b4ff2a777245946337d25b26b8f, type: 2}

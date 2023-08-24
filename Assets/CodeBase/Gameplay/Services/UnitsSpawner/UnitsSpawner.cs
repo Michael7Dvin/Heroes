@@ -1,4 +1,4 @@
-﻿using CodeBase.Gameplay.Services.TileMapService;
+﻿using CodeBase.Gameplay.Services.MapService;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.UnitFactory;
@@ -34,6 +34,7 @@ namespace CodeBase.Gameplay.Services.UnitsSpawner
             Vector3 tileCenter = _mapService.GetTileCenter(position);
 
             Unit unit = await _factory.Create(tileCenter, unitType, unitsAmount, teamID);
+            _mapService.OccupyTile(position, unit);
             _provider.Add(unit);
 
             return unit;

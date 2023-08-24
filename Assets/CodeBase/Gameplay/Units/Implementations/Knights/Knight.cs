@@ -2,8 +2,10 @@
 {
     public class Knight : Unit
     {
-        public Knight(UnitType type, int count, TeamID teamID, int initiative) : base(type, count, teamID, initiative)
+        public Knight(int count, TeamID teamID, int initiative) : base(count, teamID, initiative)
         {
         }
+
+        public override UnitType Type => UnitType.Knight;
     }
 }

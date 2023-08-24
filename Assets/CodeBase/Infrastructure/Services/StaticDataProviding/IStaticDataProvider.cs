@@ -1,4 +1,3 @@
-using CodeBase.Gameplay;
 using CodeBase.Gameplay.Level;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.Services.ResourcesLoading.AssetAddresses;
