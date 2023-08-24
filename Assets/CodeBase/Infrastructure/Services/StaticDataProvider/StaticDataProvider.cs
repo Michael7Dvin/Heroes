@@ -1,8 +1,9 @@
 ﻿using CodeBase.Gameplay.Level;
-using CodeBase.Gameplay.Teams;
 using CodeBase.Gameplay.Units;
+using CodeBase.Gameplay.Units.Configs;
 using CodeBase.Infrastructure.Services.AddressablesLoader.AssetAddresses;
 using CodeBase.Infrastructure.Services.SceneLoader;
+using CodeBase.UI;
 
 namespace CodeBase.Infrastructure.Services.StaticDataProvider
 {

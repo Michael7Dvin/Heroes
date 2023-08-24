@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd67de4812b4612a80364a0008a77b2, type: 3}
+  m_Name: Level Config
+  m_EditorClassIdentifier: 
+  <Units>k__BackingField:
+  - <Position>k__BackingField: {x: -8, y: -5}
+    <UnitType>k__BackingField: 0
+    <Amount>k__BackingField: 20
+    <TeamID>k__BackingField: 0
+  - <Position>k__BackingField: {x: -8, y: -4}
+    <UnitType>k__BackingField: 1
+    <Amount>k__BackingField: 10
+    <TeamID>k__BackingField: 0
+  - <Position>k__BackingField: {x: 6, y: 5}
+    <UnitType>k__BackingField: 3
+    <Amount>k__BackingField: 5
+    <TeamID>k__BackingField: 1
+  - <Position>k__BackingField: {x: 7, y: 5}
+    <UnitType>k__BackingField: 2
+    <Amount>k__BackingField: 1
+    <TeamID>k__BackingField: 1
+  - <Position>k__BackingField: {x: 7, y: 4}
+    <UnitType>k__BackingField: 4
+    <Amount>k__BackingField: 3
+    <TeamID>k__BackingField: 1

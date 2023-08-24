@@ -1,5 +1,5 @@
-﻿using CodeBase.Gameplay.Teams;
-using CodeBase.Gameplay.Units;
+﻿using CodeBase.Gameplay.Units;
+using CodeBase.Gameplay.Units.Parts.Team;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 

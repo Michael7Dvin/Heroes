@@ -13,17 +13,17 @@ MonoBehaviour:
   m_Name: UI
   m_EditorClassIdentifier: 
   <Canvas>k__BackingField:
-    m_AssetGUID: 
+    m_AssetGUID: f424e77a334f54d4fbc63618b7aae13b
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   <EventSystem>k__BackingField:
-    m_AssetGUID: 
+    m_AssetGUID: 40ed866757cf36045b4899b7fa926220
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   <BattleFieldWindowView>k__BackingField:
-    m_AssetGUID: 
+    m_AssetGUID: e91e30f458f7b0840a352cf6adc896b7
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

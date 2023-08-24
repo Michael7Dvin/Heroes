@@ -1,64 +1,45 @@
-﻿using System;
-using CodeBase.Common.Observable;
-using CodeBase.Gameplay.Teams;
+﻿using CodeBase.Gameplay.Units.Parts.Attacker;
+using CodeBase.Gameplay.Units.Parts.Death;
+using CodeBase.Gameplay.Units.Parts.Health;
+using CodeBase.Gameplay.Units.Parts.Position;
+using CodeBase.Gameplay.Units.Parts.Stack;
+using CodeBase.Gameplay.Units.Parts.Team;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Units
 {
-    public abstract class Unit
+    public class Unit
     {
-        private readonly Observable<int> _amount = new();
-        private readonly Observable<TeamID> _teamID = new();
-
-        protected Unit(int count, TeamID teamID, int initiative, int health, int damage)
+        public Unit(UnitType type,
+            int initiative,
+            GameObject gameObject,
+            UnitCoordinates coordinates,
+            UnitTeam team,
+            UnitStack stack,
+            IUnitAttacker attacker,
+            IUnitHealth health,
+            IUnitDeath death)
         {
-            _amount.Value = count;
-            _teamID.Value = teamID;
-            
+            Type = type;
             Initiative = initiative;
-            Health = health;
-            Damage = damage;
-        }
-
-        public Vector3Int PositionOnMap { get; private set; }
-
-        public void Construct(GameObject gameObject) => 
             GameObject = gameObject;
+            Coordinates = coordinates;
+            Team = team;
+            Stack = stack;
+            Attacker = attacker;
+            Health = health;
+            Death = death;
+        }
 
-        public abstract UnitType Type { get; }
-        
-        public IReadOnlyObservable<int> Amount => _amount;
-        public IReadOnlyObservable<TeamID> TeamID => _teamID;
-
-        public GameObject GameObject { get; private set; }
+        public UnitType Type { get; }
         public int Initiative { get; }
-        public int Health { get; }
-        public int Damage { get; }
-        
-        public event Action Died;
+        public GameObject GameObject { get; }
 
-        public void SetPositionOnMap(Vector3Int position) => 
-            PositionOnMap = position;
-
-        public void Attack(Unit attackedUnit)
-        {
-            int damage = Damage * Amount.Value;
-            attackedUnit.TakeDamage(damage);
-        }
-
-        public void TakeDamage(int damage)
-        {
-            int killedUnits = damage / Health;
-
-            if (killedUnits >= _amount.Value)
-            {
-                _amount.Value = 0;
-                Died?.Invoke();
-            }
-            else
-            {
-                _amount.Value -= killedUnits;
-            }
-        }
+        public UnitCoordinates Coordinates { get; }
+        public UnitTeam Team { get; }
+        public UnitStack Stack { get; }
+        public IUnitAttacker Attacker { get; }
+        public IUnitHealth Health { get; }
+        public IUnitDeath Death { get; }
     }
 }

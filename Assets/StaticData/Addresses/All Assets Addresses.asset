@@ -27,4 +27,5 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
-  <UnitsAddresses>k__BackingField: {fileID: 11400000, guid: 3e55a73805766f240bff86307447f31e, type: 2}
+  <Units>k__BackingField: {fileID: 11400000, guid: 3e55a73805766f240bff86307447f31e, type: 2}
+  <UI>k__BackingField: {fileID: 11400000, guid: aa7a9ed293aa4374a8cfc5a073cd624f, type: 2}

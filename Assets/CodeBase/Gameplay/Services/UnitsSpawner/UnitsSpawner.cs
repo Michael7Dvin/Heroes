@@ -1,6 +1,6 @@
 ﻿using CodeBase.Gameplay.Services.MapService;
-using CodeBase.Gameplay.Teams;
 using CodeBase.Gameplay.Units;
+using CodeBase.Gameplay.Units.Parts.Team;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.UnitFactory;
 using CodeBase.Infrastructure.Services.UnitsProvider;

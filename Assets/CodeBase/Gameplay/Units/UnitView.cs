@@ -1,20 +1,21 @@
-﻿using UnityEngine;
+﻿using CodeBase.Gameplay.Units.Parts.Death;
+using UnityEngine;
 
 namespace CodeBase.Gameplay.Units
 {
     public class UnitView : MonoBehaviour
     {
-        private Unit _unit;
-
-        public void Construct(Unit unit)
+        private IUnitDeath _death;
+        
+        public void Construct(IUnitDeath death)
         {
-            _unit = unit;
-            _unit.Died += Destroy;
+            _death = death;
+            _death.Died += Destroy;
         }
 
         private void Destroy()
         {
-            _unit.Died -= Destroy;
+            _death.Died -= Destroy;
             Destroy(gameObject);
         }
     }

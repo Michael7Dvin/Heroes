@@ -1,5 +1,5 @@
-﻿using CodeBase.Common.Observable;
-using CodeBase.Gameplay.Teams;
+﻿using CodeBase.Gameplay.Units.Parts.Stack;
+using CodeBase.Gameplay.Units.Parts.Team;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.StaticDataProvider;
 using TMPro;
@@ -17,8 +17,8 @@ namespace CodeBase.Gameplay.Units
         private Color _humansFillColor;
         private Color _undeadsFillColor;
 
-        private IReadOnlyObservable<int> _unitsCount;
-        private IReadOnlyObservable<TeamID> _teamID;
+        private UnitStack _unitStack;
+        private UnitTeam _unitTeam;
 
         [Inject]
         public void InjectDependencies(ICustomLogger logger, IStaticDataProvider staticDataProvider)
@@ -28,22 +28,22 @@ namespace CodeBase.Gameplay.Units
             _undeadsFillColor = staticDataProvider.TeamColors.UndeadsFillColor;
         }
         
-        public void Construct(IReadOnlyObservable<int> count, IReadOnlyObservable<TeamID> teamID)
+        public void Construct(UnitStack unitStack, UnitTeam unitTeam)
         {
-            _unitsCount = count;
-            _teamID = teamID;
+            _unitStack = unitStack;
+            _unitTeam = unitTeam;
 
-            UpdateCounter(count.Value);
-            UpdateFillColor(teamID.Value);
+            UpdateCounter(_unitStack.Amount.Value);
+            UpdateFillColor(_unitTeam.Current.Value);
             
-            _unitsCount.Changed += UpdateCounter;
-            _teamID.Changed += UpdateFillColor;
+            _unitStack.Amount.Changed += UpdateCounter;
+            _unitTeam.Current.Changed += UpdateFillColor;
         }
 
         private void OnDisable()
         {
-            _unitsCount.Changed -= UpdateCounter;
-            _teamID.Changed -= UpdateFillColor;
+            _unitStack.Amount.Changed -= UpdateCounter;
+            _unitTeam.Current.Changed -= UpdateFillColor;
         }
 
         private void UpdateCounter(int value) => 

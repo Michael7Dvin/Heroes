@@ -1,8 +1,8 @@
 ﻿using CodeBase.Gameplay.Services.MapService;
 using CodeBase.Gameplay.Services.Mover;
 using CodeBase.Gameplay.Services.TurnQueue;
-using CodeBase.Gameplay.Teams;
 using CodeBase.Gameplay.Units;
+using CodeBase.Gameplay.Units.Parts.Team;
 using CodeBase.Infrastructure.Services.InputService;
 using UnityEngine;
 
@@ -39,11 +39,11 @@ namespace CodeBase.Gameplay.Services.MapInteractor
 
                 if (_mapService.TryGetUnitAtTile(coordinates, out Unit unitAtTile) == true)
                 {
-                    TeamID activeUnitTeamID = activeUnit.TeamID.Value;
-                    TeamID unitAtTileTeamID = unitAtTile.TeamID.Value;
+                    TeamID activeUnitTeamID = activeUnit.Team.Current.Value;
+                    TeamID unitAtTileTeamID = unitAtTile.Team.Current.Value;
 
                     if (activeUnitTeamID != unitAtTileTeamID) 
-                        activeUnit.Attack(unitAtTile);
+                        activeUnit.Attacker.Attack(unitAtTile);
                 }
                 else
                 {

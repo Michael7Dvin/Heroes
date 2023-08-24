@@ -73,7 +73,7 @@ namespace CodeBase.Gameplay.Services.MapService
                 return;
             }
             
-            unit.SetPositionOnMap(coordinates);
+            unit.Coordinates.SetCurrent(coordinates);
             _occupiedTiles.Add(coordinates, unit);
         }
 

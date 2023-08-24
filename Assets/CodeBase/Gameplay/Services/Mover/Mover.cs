@@ -24,7 +24,7 @@ namespace CodeBase.Gameplay.Services.Mover
                 return;
             }
 
-            _mapService.ReleaseTile(unit.PositionOnMap);
+            _mapService.ReleaseTile(unit.Coordinates.Current);
             
             Vector3 moveWorldPosition = _mapService.GetTileCenter(position);
             unit.GameObject.transform.position = moveWorldPosition;
