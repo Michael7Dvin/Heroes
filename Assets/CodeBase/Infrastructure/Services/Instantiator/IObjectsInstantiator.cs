@@ -4,6 +4,8 @@ namespace CodeBase.Infrastructure.Services.Instantiator
 {
     public interface IObjectsInstantiator
     {
+        T Instantiate<T>();
+        
         GameObject InstantiatePrefab(Object prefab);
         GameObject InstantiatePrefab(Object prefab, Transform parentTransform);
         GameObject InstantiatePrefab(Object prefab, Vector3 position, Quaternion rotation);

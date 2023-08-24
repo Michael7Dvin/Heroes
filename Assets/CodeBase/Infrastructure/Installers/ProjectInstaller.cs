@@ -5,23 +5,26 @@ using CodeBase.Gameplay.Services.Mover;
 using CodeBase.Gameplay.Services.RandomService;
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Services.UnitsSpawner;
+using CodeBase.Gameplay.Teams;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States;
+using CodeBase.Infrastructure.Services.AddressablesLoader;
+using CodeBase.Infrastructure.Services.AddressablesLoader.AssetAddresses;
 using CodeBase.Infrastructure.Services.CameraFactory;
 using CodeBase.Infrastructure.Services.CameraProvider;
 using CodeBase.Infrastructure.Services.CurrentSceneProvider;
 using CodeBase.Infrastructure.Services.InputService;
 using CodeBase.Infrastructure.Services.Instantiator;
 using CodeBase.Infrastructure.Services.Logging;
-using CodeBase.Infrastructure.Services.ResourcesLoading;
-using CodeBase.Infrastructure.Services.ResourcesLoading.AssetAddresses;
-using CodeBase.Infrastructure.Services.SceneLoading;
-using CodeBase.Infrastructure.Services.StaticDataProviding;
+using CodeBase.Infrastructure.Services.SceneLoader;
+using CodeBase.Infrastructure.Services.StaticDataProvider;
 using CodeBase.Infrastructure.Services.TileMapFactory;
 using CodeBase.Infrastructure.Services.UnitFactory;
 using CodeBase.Infrastructure.Services.UnitsProvider;
-using CodeBase.UI;
+using CodeBase.UI.Services.UiUtilitiesFactory;
+using CodeBase.UI.Services.UiUtilitiesProvider;
+using CodeBase.UI.Services.WindowsFactory;
 using UnityEngine;
 using Zenject;
 
@@ -43,6 +46,8 @@ namespace CodeBase.Infrastructure.Installers
             BindInfrastructureServices();
             
             BindGameplayServices();
+
+            BindUIServices();
         }
 
         private void BindGameStateMachine()
@@ -93,6 +98,14 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<IMapService>().To<MapService>().AsSingle();
             Container.Bind<IMapInteractor>().To<MapInteractor>().AsSingle();
             Container.Bind<IMover>().To<Mover>().AsSingle();
+        }
+
+        private void BindUIServices()
+        {
+            Container.Bind<IUiUtilitiesFactory>().To<UiUtilitiesFactory>().AsSingle();
+            Container.Bind<IUiUtilitiesProvider>().To<UiUtilitiesProvider>().AsSingle();
+
+            Container.Bind<IWindowsFactory>().To<WindowsFactory>().AsSingle();
         }
     }
 }

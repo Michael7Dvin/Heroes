@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Archer Config
   m_EditorClassIdentifier: 
   <Initiative>k__BackingField: 6
+  <Health>k__BackingField: 10
+  <Damage>k__BackingField: 5

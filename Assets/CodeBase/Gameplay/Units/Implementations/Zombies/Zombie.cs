@@ -1,3 +1,5 @@
+using CodeBase.Gameplay.Teams;
+
 namespace CodeBase.Gameplay.Units.Implementations.Zombies
 {
     public class Zombie : Unit

@@ -15,21 +15,21 @@ MonoBehaviour:
   <Units>k__BackingField:
   - <Position>k__BackingField: {x: -8, y: -5}
     <UnitType>k__BackingField: 0
-    <Amount>k__BackingField: 10
+    <Amount>k__BackingField: 20
     <TeamID>k__BackingField: 0
   - <Position>k__BackingField: {x: -8, y: -4}
     <UnitType>k__BackingField: 1
-    <Amount>k__BackingField: 63
+    <Amount>k__BackingField: 10
     <TeamID>k__BackingField: 0
   - <Position>k__BackingField: {x: 6, y: 5}
     <UnitType>k__BackingField: 3
-    <Amount>k__BackingField: 200
+    <Amount>k__BackingField: 5
     <TeamID>k__BackingField: 1
   - <Position>k__BackingField: {x: 7, y: 5}
     <UnitType>k__BackingField: 2
-    <Amount>k__BackingField: 20
+    <Amount>k__BackingField: 15
     <TeamID>k__BackingField: 1
   - <Position>k__BackingField: {x: 7, y: 4}
     <UnitType>k__BackingField: 4
-    <Amount>k__BackingField: 444
+    <Amount>k__BackingField: 3
     <TeamID>k__BackingField: 1

@@ -1,13 +1,14 @@
 ﻿using CodeBase.Gameplay.Level;
 using CodeBase.Gameplay.Services.MapService;
-using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States.Base;
 using CodeBase.Infrastructure.Services.CameraFactory;
-using CodeBase.Infrastructure.Services.SceneLoading;
-using CodeBase.Infrastructure.Services.StaticDataProviding;
+using CodeBase.Infrastructure.Services.SceneLoader;
+using CodeBase.Infrastructure.Services.StaticDataProvider;
 using CodeBase.Infrastructure.Services.TileMapFactory;
-using UnityEngine;
+using CodeBase.UI.Services.UiUtilitiesFactory;
+using CodeBase.UI.Services.WindowsFactory;
+using CodeBase.UI.Windows;
 using UnityEngine.Tilemaps;
 
 namespace CodeBase.Infrastructure.GameFSM.States
@@ -17,25 +18,29 @@ namespace CodeBase.Infrastructure.GameFSM.States
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ISceneLoader _sceneLoader;
         private readonly ITileMapFactory _tileMapFactory;
-        private readonly ITurnQueue _turnQueue;
         private readonly IMapService _mapService;
         private readonly ICameraFactory _cameraFactory;
+        private readonly IUiUtilitiesFactory _uiUtilitiesFactory;
+        private readonly IWindowsFactory _windowsFactory;
+        
         private readonly LevelConfig _levelConfig;
 
         public LevelLoadingState(IGameStateMachine gameStateMachine,
             ISceneLoader sceneLoader,
             ITileMapFactory tileMapFactory,
-            ITurnQueue turnQueue,
             IMapService mapService,
             ICameraFactory cameraFactory,
+            IUiUtilitiesFactory uiUtilitiesFactory,
+            IWindowsFactory windowsFactory,
             IStaticDataProvider staticDataProvider)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
             _tileMapFactory = tileMapFactory;
-            _turnQueue = turnQueue;
             _mapService = mapService;
             _cameraFactory = cameraFactory;
+            _uiUtilitiesFactory = uiUtilitiesFactory;
+            _windowsFactory = windowsFactory;
 
             _levelConfig = staticDataProvider.LevelConfig;
         }
@@ -47,7 +52,10 @@ namespace CodeBase.Infrastructure.GameFSM.States
             Tilemap tilemap = await _tileMapFactory.Create();
             _mapService.Reset(tilemap);
 
-            _turnQueue.Initialize();
+            await _uiUtilitiesFactory.CreateCanvas();
+            await _uiUtilitiesFactory.CreateEventSystem();
+
+            await _windowsFactory.Create(WindowID.BattleField);
             
             await _cameraFactory.Create();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CodeBase.Infrastructure.Services.InputService
 {
@@ -7,7 +8,7 @@ namespace CodeBase.Infrastructure.Services.InputService
     {
         event Action NormalInteracted;
         Vector3 MouseCursorWorldPosition { get; }
-        
+
         void Initialize();
         void Enable();
         void Disable();

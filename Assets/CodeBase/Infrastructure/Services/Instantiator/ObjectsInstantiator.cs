@@ -15,7 +15,10 @@ namespace CodeBase.Infrastructure.Services.Instantiator
         }
 
         private Transform ActiveSceneRoot => _activeSceneProvider.Root;
-        
+
+        public T Instantiate<T>() => 
+            _instantiator.Instantiate<T>();
+
         public GameObject InstantiatePrefab(Object prefab) => 
             _instantiator.InstantiatePrefab(prefab, ActiveSceneRoot);
 

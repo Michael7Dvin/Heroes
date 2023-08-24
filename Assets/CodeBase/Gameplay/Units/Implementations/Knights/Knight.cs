@@ -1,4 +1,6 @@
-﻿namespace CodeBase.Gameplay.Units.Implementations.Knights
+﻿using CodeBase.Gameplay.Teams;
+
+namespace CodeBase.Gameplay.Units.Implementations.Knights
 {
     public class Knight : Unit
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using CodeBase.Common.Observable;
+using CodeBase.Gameplay.Teams;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Units

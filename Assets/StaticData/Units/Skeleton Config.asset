@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Skeleton Config
   m_EditorClassIdentifier: 
   <Initiative>k__BackingField: 7
+  <Health>k__BackingField: 15
+  <Damage>k__BackingField: 6

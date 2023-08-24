@@ -16,4 +16,4 @@ MonoBehaviour:
   <Archer>k__BackingField: {fileID: 11400000, guid: 43c5586ddf2a1b6448a2f2f5350e564d, type: 2}
   <Zombie>k__BackingField: {fileID: 11400000, guid: 3c4a3e36bde3b7d448b479a06a48f6bb, type: 2}
   <SkeletonNecromancer>k__BackingField: {fileID: 11400000, guid: 31c346dd2995e9b42935971b105c7934, type: 2}
-  <Skeletons>k__BackingField: {fileID: 11400000, guid: 9a080b4ff2a777245946337d25b26b8f, type: 2}
+  <Skeleton>k__BackingField: {fileID: 11400000, guid: 9a080b4ff2a777245946337d25b26b8f, type: 2}

@@ -1,15 +1,16 @@
 ﻿using CodeBase.Gameplay;
+using CodeBase.Gameplay.Teams;
 using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Implementations.Archers;
 using CodeBase.Gameplay.Units.Implementations.Knights;
 using CodeBase.Gameplay.Units.Implementations.SkeletonNecromancers;
 using CodeBase.Gameplay.Units.Implementations.Skeletons;
 using CodeBase.Gameplay.Units.Implementations.Zombies;
+using CodeBase.Infrastructure.Services.AddressablesLoader;
+using CodeBase.Infrastructure.Services.AddressablesLoader.AssetAddresses;
 using CodeBase.Infrastructure.Services.Instantiator;
 using CodeBase.Infrastructure.Services.Logging;
-using CodeBase.Infrastructure.Services.ResourcesLoading;
-using CodeBase.Infrastructure.Services.ResourcesLoading.AssetAddresses;
-using CodeBase.Infrastructure.Services.StaticDataProviding;
+using CodeBase.Infrastructure.Services.StaticDataProvider;
 using CodeBase.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -43,11 +44,11 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
         {
             await _addressablesLoader.LoadGameObject(_allAssetsAddresses.EmptyGameObject);
             
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.UnitsAddresses.Knight);
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.UnitsAddresses.Archer);
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.UnitsAddresses.Zombie);
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.UnitsAddresses.SkeletonNecromancer);
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.UnitsAddresses.Skeleton);
+            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.Knight);
+            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.Archer);
+            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.Zombie);
+            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.SkeletonNecromancer);
+            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.Skeleton);
         }
 
         public async UniTask<Unit> Create(Vector3 position, UnitType unitType, int unitsCount, TeamID teamID)
@@ -78,7 +79,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             
             Knight knight = new(unitsCount, teamID, initiative, health, damage);
             
-            AssetReferenceGameObject view = _allAssetsAddresses.UnitsAddresses.Knight;
+            AssetReferenceGameObject view = _allAssetsAddresses.Units.Knight;
             GameObject gameObject = await CreateView(position, knight, view);
             
             knight.Construct(gameObject);
@@ -93,7 +94,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             
             Archer archer = new(unitsCount, teamID, initiative, health, damage);
             
-            AssetReferenceGameObject viewAddress = _allAssetsAddresses.UnitsAddresses.Archer;
+            AssetReferenceGameObject viewAddress = _allAssetsAddresses.Units.Archer;
             GameObject gameObject = await CreateView(position, archer, viewAddress);
             
             archer.Construct(gameObject);
@@ -108,7 +109,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             
             Zombie zombie = new(unitsCount, teamID, initiative, health, damage);
             
-            AssetReferenceGameObject viewAddress = _allAssetsAddresses.UnitsAddresses.Zombie;
+            AssetReferenceGameObject viewAddress = _allAssetsAddresses.Units.Zombie;
             GameObject gameObject = await CreateView(position, zombie, viewAddress);
             
             zombie.Construct(gameObject);
@@ -123,7 +124,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             
             SkeletonNecromancer skeletonNecromancer = new(unitsCount, teamID, initiative, health, damage);
             
-            AssetReferenceGameObject viewAddress = _allAssetsAddresses.UnitsAddresses.SkeletonNecromancer;
+            AssetReferenceGameObject viewAddress = _allAssetsAddresses.Units.SkeletonNecromancer;
             GameObject gameObject = await CreateView(position, skeletonNecromancer, viewAddress);
             
             skeletonNecromancer.Construct(gameObject);
@@ -138,7 +139,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             
             Skeleton skeleton = new(unitsCount, teamID, initiative, health, damage);
             
-            AssetReferenceGameObject viewAddress = _allAssetsAddresses.UnitsAddresses.Skeleton;
+            AssetReferenceGameObject viewAddress = _allAssetsAddresses.Units.Skeleton;
             GameObject gameObject = await CreateView(position, skeleton, viewAddress);
             
             skeleton.Construct(gameObject);

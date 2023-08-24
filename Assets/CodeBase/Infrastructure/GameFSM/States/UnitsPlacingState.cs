@@ -2,6 +2,7 @@
 using CodeBase.Gameplay.Level;
 using CodeBase.Gameplay.Services.MapService;
 using CodeBase.Gameplay.Services.UnitsSpawner;
+using CodeBase.Gameplay.Teams;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States.Base;

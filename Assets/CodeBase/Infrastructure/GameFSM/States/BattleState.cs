@@ -14,7 +14,7 @@ namespace CodeBase.Infrastructure.GameFSM.States
 
         public void Enter()
         {
-            _turnQueue.SetFirstTurnActiveGroup();
+            _turnQueue.SetFirstTurn();
         }
 
         public void Exit() => 

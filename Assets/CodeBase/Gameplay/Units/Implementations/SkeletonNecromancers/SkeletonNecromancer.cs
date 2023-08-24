@@ -1,3 +1,5 @@
+using CodeBase.Gameplay.Teams;
+
 namespace CodeBase.Gameplay.Units.Implementations.SkeletonNecromancers
 {
     public class SkeletonNecromancer : Unit

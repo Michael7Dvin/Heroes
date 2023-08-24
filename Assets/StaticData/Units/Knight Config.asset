@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: Knight Config
   m_EditorClassIdentifier: 
   <Initiative>k__BackingField: 4
+  <Health>k__BackingField: 20
+  <Damage>k__BackingField: 3

@@ -1,7 +1,7 @@
-﻿using CodeBase.Infrastructure.Services.CameraProvider;
+﻿using CodeBase.Infrastructure.Services.AddressablesLoader;
+using CodeBase.Infrastructure.Services.CameraProvider;
 using CodeBase.Infrastructure.Services.Instantiator;
-using CodeBase.Infrastructure.Services.ResourcesLoading;
-using CodeBase.Infrastructure.Services.StaticDataProviding;
+using CodeBase.Infrastructure.Services.StaticDataProvider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;

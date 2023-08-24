@@ -6,13 +6,13 @@ namespace CodeBase.Gameplay.Services.TurnQueue
 {
     public interface ITurnQueue
     {
-        IEnumerable<Unit> Groups { get; }
+        IEnumerable<Unit> Units { get; }
         Unit ActiveUnit { get; }
         
         void Initialize();
         void CleanUp();
 
-        void SetNextTurnActiveGroup();
-        void SetFirstTurnActiveGroup();
+        void SetNextTurn();
+        void SetFirstTurn();
     }
 }

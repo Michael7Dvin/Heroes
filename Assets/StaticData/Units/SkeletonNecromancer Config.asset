@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: SkeletonNecromancer Config
   m_EditorClassIdentifier: 
   <Initiative>k__BackingField: 3
+  <Health>k__BackingField: 20
+  <Damage>k__BackingField: 2
