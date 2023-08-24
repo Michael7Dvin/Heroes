@@ -10,5 +10,7 @@ namespace CodeBase.Infrastructure.Services.AddressablesLoader.AssetAddresses
         [field: SerializeField] public AssetReferenceGameObject EventSystem { get; private set; }
         
         [field: SerializeField] public AssetReferenceGameObject BattleFieldWindowView { get; private set; }
+        [field: SerializeField] public AssetReferenceGameObject HumansWinResultsWindowView { get; private set; }
+        [field: SerializeField] public AssetReferenceGameObject UndeadsWinResultsWindowView { get; private set; }
     }
 }

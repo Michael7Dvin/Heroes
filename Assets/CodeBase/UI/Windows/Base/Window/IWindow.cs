@@ -4,7 +4,7 @@ namespace CodeBase.UI.Windows.Base.Window
 {
     public interface IWindow
     {
-        WindowID Type { get; }
+        WindowID ID { get; }
 
         event Action Destroyed;
 

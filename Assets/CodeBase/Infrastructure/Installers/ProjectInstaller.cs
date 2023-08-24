@@ -3,6 +3,7 @@ using CodeBase.Gameplay.Services.MapInteractor;
 using CodeBase.Gameplay.Services.MapService;
 using CodeBase.Gameplay.Services.Mover;
 using CodeBase.Gameplay.Services.RandomService;
+using CodeBase.Gameplay.Services.TeamWinObserver;
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Services.UnitsSpawner;
 using CodeBase.Gameplay.Units;
@@ -60,7 +61,7 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<LevelLoadingState>().AsSingle();
             Container.Bind<UnitsPlacingState>().AsSingle();
             Container.Bind<BattleState>().AsSingle();
-            Container.Bind<ResultsState>().AsSingle();
+            Container.Bind<RestartState>().AsSingle();
         }
 
         private void BindStaticDataProvider()
@@ -99,6 +100,7 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<IMapService>().To<MapService>().AsSingle();
             Container.Bind<IMapInteractor>().To<MapInteractor>().AsSingle();
             Container.Bind<IMover>().To<Mover>().AsSingle();
+            Container.Bind<ITeamWinObserver>().To<TeamWinObserver>().AsSingle();
         }
 
         private void BindUIServices()

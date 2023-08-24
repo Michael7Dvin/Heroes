@@ -14,7 +14,7 @@ namespace CodeBase.Infrastructure
             LevelLoadingState levelLoadingState,
             UnitsPlacingState unitsPlacingState,
             BattleState battleState,
-            ResultsState resultsState)
+            RestartState restartState)
         {
             _gameStateMachine = gameStateMachine;
             
@@ -23,7 +23,7 @@ namespace CodeBase.Infrastructure
             _gameStateMachine.AddState(levelLoadingState);
             _gameStateMachine.AddState(unitsPlacingState);
             _gameStateMachine.AddState(battleState);
-            _gameStateMachine.AddState(resultsState);
+            _gameStateMachine.AddState(restartState);
         }
         
         public void Initialize() => 

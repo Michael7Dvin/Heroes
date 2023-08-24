@@ -7,13 +7,12 @@ namespace CodeBase.UI.Windows.BattleField
         private readonly BattleFieldWindowView _view;
         private readonly BattleFieldWindowLogic _logic;
 
-        public BattleFieldWindow(BattleFieldWindowView view, BattleFieldWindowLogic logic) : base(view)
+        public BattleFieldWindow(WindowID id, BattleFieldWindowView view, BattleFieldWindowLogic logic) : base(id, view)
         {
             _view = view;
             _logic = logic;
         }
 
-        public override WindowID Type => WindowID.BattleField;
         protected override void OnOpened()
         {
             _view.EndTurnButtonClicked += _logic.EndTurn;

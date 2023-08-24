@@ -7,6 +7,7 @@ using CodeBase.UI.Services.UiUtilitiesProvider;
 using CodeBase.UI.Windows;
 using CodeBase.UI.Windows.Base.Window;
 using CodeBase.UI.Windows.BattleField;
+using CodeBase.UI.Windows.ResultsWindow;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -49,6 +50,10 @@ namespace CodeBase.UI.Services.WindowsFactory
             {
                 case WindowID.BattleField:
                     return await CreateBattleFieldWindow();
+                case WindowID.HumansWinResults:
+                    return await CreateHumansWinResultsWindow();
+                case WindowID.UndeadsWinResults:
+                    return await CreateUndeadsWinResultsWindow();
                 default:
                     _logger.LogError($"Unsupported {nameof(WindowID)}: '{id}'");
                     return null;
@@ -62,7 +67,35 @@ namespace CodeBase.UI.Services.WindowsFactory
             
             BattleFieldWindowView view = _instantiator.InstantiatePrefabForComponent<BattleFieldWindowView>(viewPrefab, Canvas);
             BattleFieldWindowLogic logic = _instantiator.Instantiate<BattleFieldWindowLogic>();
-            BattleFieldWindow window = new(view, logic);
+            BattleFieldWindow window = new(WindowID.BattleField, view, logic);
+
+            window.Open();
+            
+            return window;
+        }
+        
+        private async UniTask<IWindow> CreateHumansWinResultsWindow()
+        {
+            ResultsWindowView viewPrefab =
+                await _addressablesLoader.LoadComponent<ResultsWindowView>(_uiAssetsAddresses.HumansWinResultsWindowView);
+            
+            ResultsWindowView view = _instantiator.InstantiatePrefabForComponent<ResultsWindowView>(viewPrefab, Canvas);
+            ResultsWindowLogic logic = _instantiator.Instantiate<ResultsWindowLogic>();
+            ResultsWindow window = new(WindowID.HumansWinResults, view, logic);
+
+            window.Open();
+            
+            return window;
+        }
+        
+        private async UniTask<IWindow> CreateUndeadsWinResultsWindow()
+        {
+            ResultsWindowView viewPrefab =
+                await _addressablesLoader.LoadComponent<ResultsWindowView>(_uiAssetsAddresses.UndeadsWinResultsWindowView);
+            
+            ResultsWindowView view = _instantiator.InstantiatePrefabForComponent<ResultsWindowView>(viewPrefab, Canvas);
+            ResultsWindowLogic logic = _instantiator.Instantiate<ResultsWindowLogic>();
+            ResultsWindow window = new(WindowID.UndeadsWinResults, view, logic);
 
             window.Open();
             

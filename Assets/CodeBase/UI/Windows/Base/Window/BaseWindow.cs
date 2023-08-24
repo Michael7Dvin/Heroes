@@ -8,13 +8,14 @@ namespace CodeBase.UI.Windows.Base.Window
     {
         private readonly IWindowView _view;
 
-        protected BaseWindow(IWindowView view)
+        protected BaseWindow(WindowID id, IWindowView view)
         {
+            ID = id;
             _view = view;
             Destroyed += OnDestroy;
         }
 
-        public abstract WindowID Type { get; }
+        public WindowID ID { get; }
 
         public event Action Destroyed
         {

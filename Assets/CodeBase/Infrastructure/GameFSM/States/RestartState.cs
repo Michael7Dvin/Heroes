@@ -2,7 +2,7 @@
 
 namespace CodeBase.Infrastructure.GameFSM.States
 {
-    public class ResultsState : IState
+    public class RestartState : IState
     {
         public void Exit()
         {
