@@ -2,7 +2,7 @@
 {
     public enum TeamID
     {
-        Blue = 0,
-        Red = 1,
+        Humans = 0,
+        Undeads = 1,
     }
 }

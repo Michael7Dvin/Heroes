@@ -1,15 +1,20 @@
-﻿using CodeBase.Gameplay.Services.GroupFactory;
-using CodeBase.Gameplay.Services.GroupsProvider;
-using CodeBase.Gameplay.Services.MapFactory;
-using CodeBase.Gameplay.Services.MapService;
+﻿using CodeBase.Gameplay.Level;
 using CodeBase.Gameplay.Services.RandomService;
+using CodeBase.Gameplay.Services.TileMapService;
 using CodeBase.Gameplay.Services.TurnQueue;
+using CodeBase.Gameplay.Services.UnitsSpawner;
+using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.ResourcesLoading;
+using CodeBase.Infrastructure.Services.ResourcesLoading.AssetAddresses;
 using CodeBase.Infrastructure.Services.SceneLoading;
 using CodeBase.Infrastructure.Services.StaticDataProviding;
+using CodeBase.Infrastructure.Services.TileMapFactory;
+using CodeBase.Infrastructure.Services.UnitFactory;
+using CodeBase.Infrastructure.Services.UnitsProvider;
+using CodeBase.UI;
 using UnityEngine;
 using Zenject;
 
@@ -19,6 +24,9 @@ namespace CodeBase.Infrastructure.Installers
     {
         [SerializeField] private AllScenesData _allScenesData;
         [SerializeField] private AllAssetsAddresses _allAssetsAddresses;
+        [SerializeField] private TeamColors _teamColors;
+        [SerializeField] private AllUnitsConfigs _allUnitsConfigs;
+        [SerializeField] private LevelConfig _levelConfig;
         
         public override void InstallBindings()
         {
@@ -35,7 +43,9 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<IGameStateMachine>().To<GameStateMachine>().AsSingle();
 
             Container.Bind<InitializationState>().AsSingle();
+            Container.Bind<WarmUppingState>().AsSingle();
             Container.Bind<LevelLoadingState>().AsSingle();
+            Container.Bind<UnitsPlacingState>().AsSingle();
             Container.Bind<BattleState>().AsSingle();
             Container.Bind<ResultsState>().AsSingle();
         }
@@ -46,23 +56,27 @@ namespace CodeBase.Infrastructure.Installers
                 .Bind<IStaticDataProvider>()
                 .To<StaticDataProvider>()
                 .AsSingle()
-                .WithArguments(_allScenesData, _allAssetsAddresses);
+                .WithArguments(_allScenesData, _allAssetsAddresses, _teamColors, _allUnitsConfigs, _levelConfig);
         }
 
         private void BindInfrastructureServices()
         {
             Container.Bind<ICustomLogger>().To<CustomLogger>().AsSingle();
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
-            Container.Bind<ITileMapFactory>().To<TileMapFactory>().AsSingle();
             Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
+            
+            Container.Bind<IUnitFactory>().To<UnitsFactory>().AsSingle();
+            Container.Bind<IUnitsProvider>().To<UnitsProvider>().AsSingle();
+            
+            Container.Bind<ITileMapFactory>().To<TileMapFactory>().AsSingle();
+
         }
 
         private void BindGameplayServices()
         {
-            Container.Bind<IGroupFactory>().To<GroupFactory>().AsSingle();
+            Container.Bind<IUnitsSpawner>().To<UnitsSpawner>().AsSingle();
             Container.Bind<IRandomService>().To<RandomService>().AsSingle();
             Container.Bind<ITurnQueue>().To<TurnQueue>().AsSingle();
-            Container.Bind<IGroupsProvider>().To<GroupsProvider>().AsSingle();
             Container.Bind<IMapService>().To<MapService>().AsSingle();
         }
     }

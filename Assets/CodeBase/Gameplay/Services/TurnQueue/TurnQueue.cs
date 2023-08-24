@@ -1,40 +1,41 @@
 ﻿using System.Collections.Generic;
-using CodeBase.Gameplay.Groups;
-using CodeBase.Gameplay.Services.GroupsProvider;
 using CodeBase.Gameplay.Services.RandomService;
+using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.Services.Logging;
+using CodeBase.Infrastructure.Services.UnitsProvider;
+using CodeBase.UI;
 
 namespace CodeBase.Gameplay.Services.TurnQueue
 {
     public class TurnQueue : ITurnQueue
     {
         private readonly IRandomService _randomService;
-        private readonly IGroupsProvider _groupsProvider;
+        private readonly IUnitsProvider _unitsProvider;
         private readonly ICustomLogger _logger;
 
-        private readonly LinkedList<UnitsGroup> _groups = new();
-        private LinkedListNode<UnitsGroup> _activeGroupNode;
+        private readonly LinkedList<Unit> _groups = new();
+        private LinkedListNode<Unit> _activeGroupNode;
 
-        public TurnQueue(IRandomService randomService, IGroupsProvider groupsProvider, ICustomLogger logger)
+        public TurnQueue(IRandomService randomService, IUnitsProvider unitsProvider, ICustomLogger logger)
         {
             _randomService = randomService;
-            _groupsProvider = groupsProvider;
+            _unitsProvider = unitsProvider;
             _logger = logger;
         }
 
-        public IEnumerable<UnitsGroup> Groups => _groups;
-        public UnitsGroup ActiveUnitsGroup => _activeGroupNode.Value;
+        public IEnumerable<Unit> Groups => _groups;
+        public Unit ActiveUnit => _activeGroupNode.Value;
         
         public void Initialize()
         {
-            _groupsProvider.Added += Add;
-            _groupsProvider.Removed += Remove;
+            _unitsProvider.Added += Add;
+            _unitsProvider.Removed += Remove;
         }
 
         public void CleanUp()
         {
-            _groupsProvider.Added -= Add;
-            _groupsProvider.Removed -= Remove;
+            _unitsProvider.Added -= Add;
+            _unitsProvider.Removed -= Remove;
             
             _groups.Clear();
             _activeGroupNode = null;
@@ -52,17 +53,17 @@ namespace CodeBase.Gameplay.Services.TurnQueue
         public void SetFirstTurnActiveGroup() => 
             _activeGroupNode = _groups.Last;
         
-        private void Add(UnitsGroup unitsGroup)
+        private void Add(Unit unit)
         {
             if (_groups.Count == 0)
             {
-                _groups.AddFirst(unitsGroup);
+                _groups.AddFirst(unit);
                 return;
             }
             
-            int newGroupInitiative = unitsGroup.Initiative;
+            int newGroupInitiative = unit.Initiative;
             
-            LinkedListNode<UnitsGroup> currentNode = _groups.First;
+            LinkedListNode<Unit> currentNode = _groups.First;
 
             while (currentNode != null)
             {
@@ -72,20 +73,20 @@ namespace CodeBase.Gameplay.Services.TurnQueue
                 {
                     if (_randomService.DoFiftyFifty() == false)
                     {
-                        _groups.AddBefore(currentNode, unitsGroup);
+                        _groups.AddBefore(currentNode, unit);
                         return;
                     }
                 }
 
                 if (newGroupInitiative < currentNodeGroupInitiative)
                 {
-                    _groups.AddBefore(currentNode, unitsGroup);
+                    _groups.AddBefore(currentNode, unit);
                     return;
                 }
 
                 if (currentNode == _groups.Last)
                 {
-                    _groups.AddLast(unitsGroup);
+                    _groups.AddLast(unit);
                     return;
                 }
 
@@ -93,12 +94,12 @@ namespace CodeBase.Gameplay.Services.TurnQueue
             }
         }
 
-        private  void Remove(UnitsGroup unitsGroup)
+        private  void Remove(Unit unit)
         {
-            if (unitsGroup == _activeGroupNode.Value)
-                _logger.LogError($"Unable to remove {nameof(ActiveUnitsGroup)}. Feature not implemented");
+            if (unit == _activeGroupNode.Value)
+                _logger.LogError($"Unable to remove {nameof(ActiveUnit)}. Feature not implemented");
 
-            _groups.Remove(unitsGroup);
+            _groups.Remove(unit);
         }
     }
 }

@@ -1,12 +1,13 @@
 using System.Collections.Generic;
-using CodeBase.Gameplay.Groups;
+using CodeBase.Gameplay.Units;
+using CodeBase.UI;
 
 namespace CodeBase.Gameplay.Services.TurnQueue
 {
     public interface ITurnQueue
     {
-        IEnumerable<UnitsGroup> Groups { get; }
-        UnitsGroup ActiveUnitsGroup { get; }
+        IEnumerable<Unit> Groups { get; }
+        Unit ActiveUnit { get; }
         
         void Initialize();
         void CleanUp();

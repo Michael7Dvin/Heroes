@@ -1,5 +1,9 @@
-using CodeBase.Infrastructure.Services.ResourcesLoading;
+using CodeBase.Gameplay;
+using CodeBase.Gameplay.Level;
+using CodeBase.Gameplay.Units;
+using CodeBase.Infrastructure.Services.ResourcesLoading.AssetAddresses;
 using CodeBase.Infrastructure.Services.SceneLoading;
+using CodeBase.UI;
 
 namespace CodeBase.Infrastructure.Services.StaticDataProviding
 {
@@ -7,5 +11,8 @@ namespace CodeBase.Infrastructure.Services.StaticDataProviding
     {
         AllScenesData ScenesData { get; }
         AllAssetsAddresses AssetsAddresses { get; }
+        TeamColors TeamColors { get; }
+        AllUnitsConfigs AllUnitsConfigs { get; }
+        LevelConfig LevelConfig { get; }
     }
 }

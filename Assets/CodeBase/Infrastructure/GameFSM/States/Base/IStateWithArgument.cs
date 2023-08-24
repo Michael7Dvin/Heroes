@@ -2,6 +2,6 @@
 {
     public interface IStateWithArgument<in TArgument> : IExitableState
     {
-        void Enter(TArgument argument);
+        void Enter(TArgument levelConfig);
     }
 }

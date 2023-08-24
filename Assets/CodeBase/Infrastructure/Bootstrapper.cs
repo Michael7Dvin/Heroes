@@ -10,14 +10,18 @@ namespace CodeBase.Infrastructure
 
         public Bootstrapper(IGameStateMachine gameStateMachine,
             InitializationState initializationState,
+            WarmUppingState warmUppingState,
             LevelLoadingState levelLoadingState,
+            UnitsPlacingState unitsPlacingState,
             BattleState battleState,
             ResultsState resultsState)
         {
             _gameStateMachine = gameStateMachine;
             
             _gameStateMachine.AddState(initializationState);
+            _gameStateMachine.AddState(warmUppingState);
             _gameStateMachine.AddState(levelLoadingState);
+            _gameStateMachine.AddState(unitsPlacingState);
             _gameStateMachine.AddState(battleState);
             _gameStateMachine.AddState(resultsState);
         }

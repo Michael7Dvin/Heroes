@@ -18,7 +18,7 @@ MonoBehaviour:
   m_GUID: 80efeb228ceda534d99761001e768ccb
   m_SerializeEntries:
   - m_GUID: dcdd2d817c7eac041842272804bcce2e
-    m_Address: Assets/Bundles/Grid.prefab
+    m_Address: Grid
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

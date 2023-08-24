@@ -18,7 +18,7 @@ namespace CodeBase.Infrastructure.GameFSM.States
         public void Enter()
         {
             _sceneLoader.Initialize();
-            _gameStateMachine.EnterState<LevelLoadingState>();
+            _gameStateMachine.EnterState<WarmUppingState>();
         }
 
         public void Exit()

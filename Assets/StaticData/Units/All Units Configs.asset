@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eea5fa526dd348049c7bf743ac21ce68, type: 3}
+  m_Name: All Units Configs
+  m_EditorClassIdentifier: 
+  <Knight>k__BackingField: {fileID: 0}
+  <Archer>k__BackingField: {fileID: 0}
+  <Zombie>k__BackingField: {fileID: 0}
+  <SkeletonNecromancer>k__BackingField: {fileID: 0}
+  <Skeletons>k__BackingField: {fileID: 0}
