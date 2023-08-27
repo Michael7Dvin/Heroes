@@ -6,8 +6,8 @@ namespace CodeBase.Gameplay.Services.TurnQueue
 {
     public interface ITurnQueue
     {
-        IEnumerable<Unit> Units { get; }
-        Unit ActiveUnit { get; }
+        IEnumerable<Units.Unit> Units { get; }
+        Units.Unit ActiveUnit { get; }
         
         void Initialize();
         void CleanUp();

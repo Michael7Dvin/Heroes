@@ -27,7 +27,7 @@ MonoBehaviour:
     <TeamID>k__BackingField: 1
   - <Position>k__BackingField: {x: 7, y: 5}
     <UnitType>k__BackingField: 2
-    <Amount>k__BackingField: 1
+    <Amount>k__BackingField: 2
     <TeamID>k__BackingField: 1
   - <Position>k__BackingField: {x: 7, y: 4}
     <UnitType>k__BackingField: 4

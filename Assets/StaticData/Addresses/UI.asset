@@ -27,3 +27,13 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
+  <HumansWinResultsWindowView>k__BackingField:
+    m_AssetGUID: 2fb37e5b34080b245b1004b2b7f9df03
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0
+  <UndeadsWinResultsWindowView>k__BackingField:
+    m_AssetGUID: b3fadeb64c71a22498c209804517f84d
+    m_SubObjectName: 
+    m_SubObjectType: 
+    m_EditorAssetChanged: 0

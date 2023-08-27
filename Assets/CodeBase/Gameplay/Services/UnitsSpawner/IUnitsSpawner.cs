@@ -7,6 +7,6 @@ namespace CodeBase.Gameplay.Services.UnitsSpawner
 {
     public interface IUnitsSpawner
     {
-        UniTask<Unit> Spawn(Vector3Int position, UnitType unitType, int unitsAmount, TeamID teamID);
+        UniTask<Unit> Spawn(Vector2Int coordinates, UnitType unitType, int unitsAmount, TeamID teamID);
     }
 }

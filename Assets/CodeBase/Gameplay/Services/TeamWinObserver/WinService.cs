@@ -7,13 +7,13 @@ using CodeBase.UI.Windows;
 
 namespace CodeBase.Gameplay.Services.TeamWinObserver
 {
-    public class TeamWinObserver : ITeamWinObserver
+    public class WinService : IWinService
     {
         private readonly IUnitsProvider _unitsProvider;
         private readonly ICustomLogger _logger;
         private readonly IWindowsFactory _windowsFactory;
 
-        public TeamWinObserver(IUnitsProvider unitsProvider, ICustomLogger logger, IWindowsFactory windowsFactory)
+        public WinService(IUnitsProvider unitsProvider, ICustomLogger logger, IWindowsFactory windowsFactory)
         {
             _unitsProvider = unitsProvider;
             _logger = logger;
@@ -35,7 +35,7 @@ namespace CodeBase.Gameplay.Services.TeamWinObserver
             _unitsProvider.Removed += OnUnitRemoved;
         }
 
-        private void OnUnitSpawned(Unit unit)
+        private void OnUnitSpawned(Units.Unit unit)
         {
             TeamID unitTeamID = unit.Team.Current.Value;
             
@@ -54,7 +54,7 @@ namespace CodeBase.Gameplay.Services.TeamWinObserver
             _logger.LogError($"Unable to process spawned unit. Unexpected {nameof(TeamID)}: {unitTeamID}");
         }
 
-        private void OnUnitRemoved(Unit unit)
+        private void OnUnitRemoved(Units.Unit unit)
         {
             TeamID unitTeamID = unit.Team.Current.Value;
             

@@ -1,7 +1,6 @@
 ﻿using CodeBase.Gameplay.Units.Parts.Attacker;
 using CodeBase.Gameplay.Units.Parts.Death;
 using CodeBase.Gameplay.Units.Parts.Health;
-using CodeBase.Gameplay.Units.Parts.Position;
 using CodeBase.Gameplay.Units.Parts.Stack;
 using CodeBase.Gameplay.Units.Parts.Team;
 using UnityEngine;
@@ -11,20 +10,20 @@ namespace CodeBase.Gameplay.Units
     public class Unit
     {
         public Unit(UnitType type,
-            int initiative,
             GameObject gameObject,
-            UnitCoordinates coordinates,
+            int initiative,
             UnitTeam team,
+            UnitCoordinates coordinates,
             UnitStack stack,
             IUnitAttacker attacker,
             IUnitHealth health,
             IUnitDeath death)
         {
             Type = type;
-            Initiative = initiative;
             GameObject = gameObject;
-            Coordinates = coordinates;
+            Initiative = initiative;
             Team = team;
+            Coordinates = coordinates;
             Stack = stack;
             Attacker = attacker;
             Health = health;
@@ -32,11 +31,11 @@ namespace CodeBase.Gameplay.Units
         }
 
         public UnitType Type { get; }
-        public int Initiative { get; }
         public GameObject GameObject { get; }
+        public int Initiative { get; }
 
-        public UnitCoordinates Coordinates { get; }
         public UnitTeam Team { get; }
+        public UnitCoordinates Coordinates { get; }
         public UnitStack Stack { get; }
         public IUnitAttacker Attacker { get; }
         public IUnitHealth Health { get; }

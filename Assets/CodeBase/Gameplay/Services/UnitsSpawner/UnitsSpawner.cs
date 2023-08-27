@@ -1,4 +1,5 @@
 ﻿using CodeBase.Gameplay.Services.MapService;
+using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Parts.Team;
 using CodeBase.Infrastructure.Services.Logging;
@@ -24,18 +25,21 @@ namespace CodeBase.Gameplay.Services.UnitsSpawner
             _factory = factory;
         }
 
-        public async UniTask<Unit> Spawn(Vector3Int position, UnitType unitType, int unitsAmount, TeamID teamID)
+        public async UniTask<Unit> Spawn(Vector2Int coordinates, UnitType unitType, int unitsAmount, TeamID teamID)
         {
-            if (_mapService.IsTileOccupied(position) == true)
+            Tile tile = _mapService.GetTile(coordinates);
+            
+            if (tile.Logic.IsOccupied == true)
             {
-                _logger.LogError($"Unable to spawn {nameof(Unit)}: {unitType} at: {position}. Tile already occupied");
+                _logger.LogError($"Unable to spawn {nameof(Unit)}: {unitType} at: {coordinates}. {nameof(TileLogic)} already occupied");
                 return null;
             }
 
-            Vector3 tileCenter = _mapService.GetTileCenter(position);
-
-            Unit unit = await _factory.Create(tileCenter, unitType, unitsAmount, teamID);
-            _mapService.OccupyTile(position, unit);
+            Vector3 tilePosition = tile.View.transform.position;
+            
+            Unit unit = await _factory.Create(tilePosition, unitType, unitsAmount, teamID);
+            unit.Coordinates.Set(tile.View.Coordinates);
+            tile.Logic.Occupy(unit);
             _provider.Add(unit);
 
             return unit;

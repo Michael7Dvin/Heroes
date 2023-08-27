@@ -1,10 +1,8 @@
-﻿using CodeBase.Gameplay;
-using CodeBase.Gameplay.Units;
+﻿using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Configs;
 using CodeBase.Gameplay.Units.Parts.Attacker;
 using CodeBase.Gameplay.Units.Parts.Death;
 using CodeBase.Gameplay.Units.Parts.Health;
-using CodeBase.Gameplay.Units.Parts.Position;
 using CodeBase.Gameplay.Units.Parts.Stack;
 using CodeBase.Gameplay.Units.Parts.Team;
 using CodeBase.Infrastructure.Services.AddressablesLoader;
@@ -12,7 +10,6 @@ using CodeBase.Infrastructure.Services.AddressablesLoader.AssetAddresses;
 using CodeBase.Infrastructure.Services.Instantiator;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.StaticDataProvider;
-using CodeBase.UI;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -77,17 +74,16 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             KnightConfig config = _configs.Knight;
             AssetReferenceGameObject address = _allAssetsAddresses.Units.Knight;
             
-            UnitCoordinates coordinates = new();
             UnitTeam team = new(teamID);
+            UnitCoordinates coordinates = new();
             UnitStack stack = new(stackAmount);
             UnitAttacker attacker = new(config.Damage, stack);
             UnitDeath death = new();
             UnitHealth health = new(config.Health, stack, death);
 
-            AssetReferenceGameObject view = _allAssetsAddresses.Units.Knight;
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, config.Initiative, gameObject, coordinates, team, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
             return unit;
         }
 
@@ -96,8 +92,8 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             ArcherConfig config = _configs.Archer;
             AssetReferenceGameObject address = _allAssetsAddresses.Units.Archer;
             
-            UnitCoordinates coordinates = new();
             UnitTeam team = new(teamID);
+            UnitCoordinates coordinates = new();
             UnitStack stack = new(stackAmount);
             UnitAttacker attacker = new(config.Damage, stack);
             UnitDeath death = new();
@@ -105,7 +101,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, config.Initiative, gameObject, coordinates, team, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
             return unit;
         }
 
@@ -114,8 +110,8 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             ZombieConfig config = _configs.Zombie;
             AssetReferenceGameObject address = _allAssetsAddresses.Units.Zombie;
             
-            UnitCoordinates coordinates = new();
             UnitTeam team = new(teamID);
+            UnitCoordinates coordinates = new();
             UnitStack stack = new(stackAmount);
             UnitAttacker attacker = new(config.Damage, stack);
             UnitDeath death = new();
@@ -123,7 +119,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, config.Initiative, gameObject, coordinates, team, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
             return unit;
         }
 
@@ -132,8 +128,8 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             SkeletonNecromancerConfig config = _configs.SkeletonNecromancer;
             AssetReferenceGameObject address = _allAssetsAddresses.Units.SkeletonNecromancer;
             
-            UnitCoordinates coordinates = new();
             UnitTeam team = new(teamID);
+            UnitCoordinates coordinates = new();
             UnitStack stack = new(stackAmount);
             UnitAttacker attacker = new(config.Damage, stack);
             UnitDeath death = new();
@@ -141,7 +137,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, config.Initiative, gameObject, coordinates, team, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
             return unit;
         }
 
@@ -150,8 +146,8 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             SkeletonConfig config = _configs.Skeleton;
             AssetReferenceGameObject address = _allAssetsAddresses.Units.Skeleton;
             
-            UnitCoordinates coordinates = new();
             UnitTeam team = new(teamID);
+            UnitCoordinates coordinates = new();
             UnitStack stack = new(stackAmount);
             UnitAttacker attacker = new(config.Damage, stack);
             UnitDeath death = new();
@@ -159,7 +155,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, config.Initiative, gameObject, coordinates, team, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
             return unit;
         }
 

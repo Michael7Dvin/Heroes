@@ -1,12 +1,11 @@
 ﻿using CodeBase.Gameplay.Level;
+using CodeBase.Gameplay.Services.MapGenerator;
 using CodeBase.Gameplay.Services.MapInteractor;
 using CodeBase.Gameplay.Services.MapService;
-using CodeBase.Gameplay.Services.Mover;
 using CodeBase.Gameplay.Services.RandomService;
 using CodeBase.Gameplay.Services.TeamWinObserver;
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Services.UnitsSpawner;
-using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Configs;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States;
@@ -20,7 +19,7 @@ using CodeBase.Infrastructure.Services.Instantiator;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.SceneLoader;
 using CodeBase.Infrastructure.Services.StaticDataProvider;
-using CodeBase.Infrastructure.Services.TileMapFactory;
+using CodeBase.Infrastructure.Services.TileFactory;
 using CodeBase.Infrastructure.Services.UnitFactory;
 using CodeBase.Infrastructure.Services.UnitsProvider;
 using CodeBase.UI;
@@ -85,11 +84,11 @@ namespace CodeBase.Infrastructure.Installers
 
             Container.Bind<IUnitFactory>().To<UnitsFactory>().AsSingle();
             Container.Bind<IUnitsProvider>().To<UnitsProvider>().AsSingle();
-            
-            Container.Bind<ITileMapFactory>().To<TileMapFactory>().AsSingle();
 
             Container.Bind<ICameraFactory>().To<CameraFactory>().AsSingle();
             Container.Bind<ICameraProvider>().To<CameraProvider>().AsSingle();
+            
+            Container.Bind<ITileFactory>().To<TileFactory>().AsSingle();
         }
 
         private void BindGameplayServices()
@@ -97,10 +96,12 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<IUnitsSpawner>().To<UnitsSpawner>().AsSingle();
             Container.Bind<IRandomService>().To<RandomService>().AsSingle();
             Container.Bind<ITurnQueue>().To<TurnQueue>().AsSingle();
+            Container.Bind<IWinService>().To<WinService>().AsSingle();
+            
+            
+            Container.Bind<IMapGenerator>().To<MapGenerator>().AsSingle();
             Container.Bind<IMapService>().To<MapService>().AsSingle();
             Container.Bind<IMapInteractor>().To<MapInteractor>().AsSingle();
-            Container.Bind<IMover>().To<Mover>().AsSingle();
-            Container.Bind<ITeamWinObserver>().To<TeamWinObserver>().AsSingle();
         }
 
         private void BindUIServices()

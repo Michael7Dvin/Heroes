@@ -13,27 +13,27 @@ MonoBehaviour:
   m_Name: Units
   m_EditorClassIdentifier: 
   <Knight>k__BackingField:
-    m_AssetGUID: e2028e2df2620f74a82a42f858d4dc57
+    m_AssetGUID: 16f4c9c0b50939a4983d34a3dc55b40f
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   <Archer>k__BackingField:
-    m_AssetGUID: acfbb9a9d3b5edb44b7bd05d797054c8
+    m_AssetGUID: 099e6d6b0e7fb98489cfbcdcc3156160
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   <Zombie>k__BackingField:
-    m_AssetGUID: 55059a541042b1847bf468d7aa88b0ec
+    m_AssetGUID: 9a7c484fed6118345b2caf451ad93ad4
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   <SkeletonNecromancer>k__BackingField:
-    m_AssetGUID: 2fd86f3afe5836149a5a64b82f592e5b
+    m_AssetGUID: e778f15191231374fbc932295f08919c
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0
   <Skeleton>k__BackingField:
-    m_AssetGUID: 50c4226abf83e5a4684336569a97e148
+    m_AssetGUID: baaff2d29cd23f042a280f97903e4644
     m_SubObjectName: 
     m_SubObjectType: 
     m_EditorAssetChanged: 0

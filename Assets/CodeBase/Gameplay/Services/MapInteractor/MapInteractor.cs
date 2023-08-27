@@ -1,9 +1,10 @@
 ﻿using CodeBase.Gameplay.Services.MapService;
-using CodeBase.Gameplay.Services.Mover;
 using CodeBase.Gameplay.Services.TurnQueue;
+using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Parts.Team;
 using CodeBase.Infrastructure.Services.InputService;
+using CodeBase.Infrastructure.Services.Logging;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Services.MapInteractor
@@ -13,43 +14,77 @@ namespace CodeBase.Gameplay.Services.MapInteractor
         private readonly IMapService _mapService;
         private readonly IInputService _inputService;
         private readonly ITurnQueue _turnQueue;
-        private readonly IMover _mover;
+        private readonly ICustomLogger _logger;
 
-        public MapInteractor(IMapService mapService, IInputService inputService, ITurnQueue turnQueue, IMover mover)
+        public MapInteractor(IMapService mapService,
+            IInputService inputService,
+            ITurnQueue turnQueue,
+            ICustomLogger logger)
         {
             _mapService = mapService;
             _inputService = inputService;
             _turnQueue = turnQueue;
-            _mover = mover;
+            _logger = logger;
         }
 
         public void Initialize() => 
-            _inputService.NormalInteracted += OnNormalInteraction;
+            _inputService.NormalInteracted += Interact;
 
         public void CleanUp() => 
-            _inputService.NormalInteracted -= OnNormalInteraction;
+            _inputService.NormalInteracted -= Interact;
 
-        private void OnNormalInteraction()
+        private void Interact()
         {
-            Vector3 clickPosition = _inputService.MouseCursorWorldPosition;
-
-            if (_mapService.TryGetCellCoordinates(clickPosition, out Vector3Int coordinates) == true)
+            if (TryRaycast(out TileView tileView))
             {
+                Tile tile = _mapService.GetTile(tileView.Coordinates);
                 Unit activeUnit = _turnQueue.ActiveUnit;
 
-                if (_mapService.TryGetUnitAtTile(coordinates, out Unit unitAtTile) == true)
-                {
-                    TeamID activeUnitTeamID = activeUnit.Team.Current.Value;
-                    TeamID unitAtTileTeamID = unitAtTile.Team.Current.Value;
-
-                    if (activeUnitTeamID != unitAtTileTeamID) 
-                        activeUnit.Attacker.Attack(unitAtTile);
-                }
+                if (tile.Logic.IsOccupied == true)
+                    AttackUnit(tile, activeUnit);
                 else
-                {
-                    _mover.Move(coordinates, activeUnit);
-                }
+                    MoveUnit(tile, activeUnit);
             }
+        }
+
+        private bool TryRaycast(out TileView tileView)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(_inputService.MouseCursorWorldPosition, Vector2.zero);
+            
+            if (hit.collider != null)
+            {
+                if (hit.collider.TryGetComponent(out tileView))
+                    return true;
+            }
+
+            tileView = null;
+            return false;
+        }
+
+        private static void AttackUnit(Tile tile, Unit unit)
+        {
+            Unit unitAtTile = tile.Logic.Unit;
+
+            TeamID activeUnitTeamID = unit.Team.Current.Value;
+            TeamID unitAtTileTeamID = unitAtTile.Team.Current.Value;
+
+            if (activeUnitTeamID != unitAtTileTeamID)
+                unit.Attacker.Attack(unitAtTile);
+        }
+
+        private void MoveUnit(Tile tile, Unit unit)
+        {
+            if (tile.Logic.IsOccupied == true)
+            {
+                _logger.LogError($"Unable to move {nameof(Unit)}: {unit.Type}. {nameof(TileLogic)} already occupied.");
+                return;
+            }
+            
+            _mapService.GetTile(unit.Coordinates.Value).Logic.Release();
+
+            unit.Coordinates.Set(tile.View.Coordinates);
+            unit.GameObject.transform.position = tile.View.transform.position;
+            tile.Logic.Occupy(unit);
         }
     }
 }
