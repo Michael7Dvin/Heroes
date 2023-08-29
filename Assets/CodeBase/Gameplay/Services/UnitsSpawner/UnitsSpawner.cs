@@ -1,4 +1,4 @@
-﻿using CodeBase.Gameplay.Services.MapService;
+﻿using CodeBase.Gameplay.Services.Map.MapService;
 using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Parts.Team;

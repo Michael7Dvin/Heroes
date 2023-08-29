@@ -13,23 +13,23 @@ MonoBehaviour:
   m_Name: Level Config
   m_EditorClassIdentifier: 
   <Units>k__BackingField:
-  - <Position>k__BackingField: {x: -8, y: -5}
+  - <Coordinates>k__BackingField: {x: 0, y: 0}
     <UnitType>k__BackingField: 0
     <Amount>k__BackingField: 20
     <TeamID>k__BackingField: 0
-  - <Position>k__BackingField: {x: -8, y: -4}
+  - <Coordinates>k__BackingField: {x: 1, y: 0}
     <UnitType>k__BackingField: 1
     <Amount>k__BackingField: 10
     <TeamID>k__BackingField: 0
-  - <Position>k__BackingField: {x: 6, y: 5}
+  - <Coordinates>k__BackingField: {x: 2, y: 0}
     <UnitType>k__BackingField: 3
     <Amount>k__BackingField: 5
     <TeamID>k__BackingField: 1
-  - <Position>k__BackingField: {x: 7, y: 5}
+  - <Coordinates>k__BackingField: {x: 3, y: 0}
     <UnitType>k__BackingField: 2
     <Amount>k__BackingField: 2
     <TeamID>k__BackingField: 1
-  - <Position>k__BackingField: {x: 7, y: 4}
+  - <Coordinates>k__BackingField: {x: 4, y: 0}
     <UnitType>k__BackingField: 4
     <Amount>k__BackingField: 3
     <TeamID>k__BackingField: 1

@@ -1,4 +1,5 @@
 ﻿using CodeBase.Gameplay.Units.Parts.Attacker;
+using CodeBase.Gameplay.Units.Parts.Coordinates;
 using CodeBase.Gameplay.Units.Parts.Death;
 using CodeBase.Gameplay.Units.Parts.Health;
 using CodeBase.Gameplay.Units.Parts.Stack;

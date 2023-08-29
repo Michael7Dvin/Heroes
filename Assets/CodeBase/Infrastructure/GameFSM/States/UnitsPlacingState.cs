@@ -1,4 +1,5 @@
 ﻿using CodeBase.Gameplay.Level;
+using CodeBase.Gameplay.Services.TeamWinObserver;
 using CodeBase.Gameplay.Services.UnitsSpawner;
 using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Parts.Team;
@@ -11,15 +12,19 @@ namespace CodeBase.Infrastructure.GameFSM.States
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly IUnitsSpawner _spawner;
-        
-        public UnitsPlacingState(IGameStateMachine gameStateMachine, IUnitsSpawner spawner)
+        private readonly IWinService _winService;
+
+        public UnitsPlacingState(IGameStateMachine gameStateMachine, IUnitsSpawner spawner, IWinService winService)
         {
             _gameStateMachine = gameStateMachine;
             _spawner = spawner;
+            _winService = winService;
         }
 
         public async void Enter(LevelConfig levelConfig)
         {
+            _winService.Reset(TeamID.Humans, TeamID.Undeads);
+
             foreach (UnitPlacementConfig unit in levelConfig.Units)
             {
                 UnitType type = unit.UnitType;
@@ -29,7 +34,7 @@ namespace CodeBase.Infrastructure.GameFSM.States
                 await _spawner.Spawn(unit.Coordinates, type, amount, teamID);
             }
             
-            _gameStateMachine.EnterState<BattleState>();
+            _gameStateMachine.EnterState<GameplayState>();
         }
 
         public void Exit()

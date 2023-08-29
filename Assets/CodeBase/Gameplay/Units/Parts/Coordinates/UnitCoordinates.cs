@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace CodeBase.Gameplay.Units
+namespace CodeBase.Gameplay.Units.Parts.Coordinates
 {
     public class UnitCoordinates
     {

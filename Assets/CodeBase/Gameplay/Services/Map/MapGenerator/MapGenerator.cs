@@ -4,7 +4,7 @@ using CodeBase.Infrastructure.Services.TileFactory;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace CodeBase.Gameplay.Services.MapGenerator
+namespace CodeBase.Gameplay.Services.Map.MapGenerator
 {
     public class MapGenerator : IMapGenerator 
     {

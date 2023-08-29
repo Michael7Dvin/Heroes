@@ -24,8 +24,8 @@ namespace CodeBase.Gameplay.Units
         public void InjectDependencies(ICustomLogger logger, IStaticDataProvider staticDataProvider)
         {
             _logger = logger;
-            _humansFillColor = staticDataProvider.TeamColors.HumansFillColor;
-            _undeadsFillColor = staticDataProvider.TeamColors.UndeadsFillColor;
+            _humansFillColor = staticDataProvider.Configs.TeamColors.HumansFillColor;
+            _undeadsFillColor = staticDataProvider.Configs.TeamColors.UndeadsFillColor;
         }
         
         public void Construct(UnitStack unitStack, UnitTeam unitTeam)

@@ -13,7 +13,7 @@ namespace CodeBase.Infrastructure
             WarmUppingState warmUppingState,
             LevelLoadingState levelLoadingState,
             UnitsPlacingState unitsPlacingState,
-            BattleState battleState,
+            GameplayState gameplayState,
             RestartState restartState)
         {
             _gameStateMachine = gameStateMachine;
@@ -22,7 +22,7 @@ namespace CodeBase.Infrastructure
             _gameStateMachine.AddState(warmUppingState);
             _gameStateMachine.AddState(levelLoadingState);
             _gameStateMachine.AddState(unitsPlacingState);
-            _gameStateMachine.AddState(battleState);
+            _gameStateMachine.AddState(gameplayState);
             _gameStateMachine.AddState(restartState);
         }
         

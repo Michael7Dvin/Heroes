@@ -1,13 +1,4 @@
-﻿using CodeBase.Gameplay.Level;
-using CodeBase.Gameplay.Services.MapGenerator;
-using CodeBase.Gameplay.Services.MapInteractor;
-using CodeBase.Gameplay.Services.MapService;
-using CodeBase.Gameplay.Services.RandomService;
-using CodeBase.Gameplay.Services.TeamWinObserver;
-using CodeBase.Gameplay.Services.TurnQueue;
-using CodeBase.Gameplay.Services.UnitsSpawner;
-using CodeBase.Gameplay.Units.Configs;
-using CodeBase.Infrastructure.GameFSM.FSM;
+﻿using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States;
 using CodeBase.Infrastructure.Services.AddressablesLoader;
 using CodeBase.Infrastructure.Services.AddressablesLoader.AssetAddresses;
@@ -22,33 +13,23 @@ using CodeBase.Infrastructure.Services.StaticDataProvider;
 using CodeBase.Infrastructure.Services.TileFactory;
 using CodeBase.Infrastructure.Services.UnitFactory;
 using CodeBase.Infrastructure.Services.UnitsProvider;
-using CodeBase.UI;
-using CodeBase.UI.Services.UiUtilitiesFactory;
-using CodeBase.UI.Services.UiUtilitiesProvider;
-using CodeBase.UI.Services.WindowsFactory;
+using CodeBase.Infrastructure.Services.Updater;
 using UnityEngine;
 using Zenject;
 
 namespace CodeBase.Infrastructure.Installers
 {
-    public class ProjectInstaller : MonoInstaller
+    public class InfrastructureInstaller : MonoInstaller
     {
         [SerializeField] private AllScenesData _allScenesData;
         [SerializeField] private AllAssetsAddresses _allAssetsAddresses;
-        [SerializeField] private TeamColors _teamColors;
-        [SerializeField] private AllUnitsConfigs _allUnitsConfigs;
-        [SerializeField] private LevelConfig _levelConfig;
+        [SerializeField] private AllConfigs _allConfigs;
         
         public override void InstallBindings()
         {
             BindGameStateMachine();
-            
             BindStaticDataProvider();
             BindInfrastructureServices();
-            
-            BindGameplayServices();
-
-            BindUIServices();
         }
 
         private void BindGameStateMachine()
@@ -59,7 +40,7 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<WarmUppingState>().AsSingle();
             Container.Bind<LevelLoadingState>().AsSingle();
             Container.Bind<UnitsPlacingState>().AsSingle();
-            Container.Bind<BattleState>().AsSingle();
+            Container.Bind<GameplayState>().AsSingle();
             Container.Bind<RestartState>().AsSingle();
         }
 
@@ -69,7 +50,7 @@ namespace CodeBase.Infrastructure.Installers
                 .Bind<IStaticDataProvider>()
                 .To<StaticDataProvider>()
                 .AsSingle()
-                .WithArguments(_allScenesData, _allAssetsAddresses, _teamColors, _allUnitsConfigs, _levelConfig);
+                .WithArguments(_allScenesData, _allAssetsAddresses, _allConfigs);
         }
 
         private void BindInfrastructureServices()
@@ -78,6 +59,7 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<ICustomLogger>().To<CustomLogger>().AsSingle();
             Container.Bind<IAddressablesLoader>().To<AddressablesLoader>().AsSingle();
             Container.Bind<IInputService>().To<InputService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<Updater>().AsSingle();
             
             Container.Bind<ISceneLoader>().To<SceneLoader>().AsSingle();
             Container.Bind<IActiveSceneProvider>().To<ActiveSceneProvider>().AsSingle();
@@ -89,27 +71,6 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<ICameraProvider>().To<CameraProvider>().AsSingle();
             
             Container.Bind<ITileFactory>().To<TileFactory>().AsSingle();
-        }
-
-        private void BindGameplayServices()
-        {
-            Container.Bind<IUnitsSpawner>().To<UnitsSpawner>().AsSingle();
-            Container.Bind<IRandomService>().To<RandomService>().AsSingle();
-            Container.Bind<ITurnQueue>().To<TurnQueue>().AsSingle();
-            Container.Bind<IWinService>().To<WinService>().AsSingle();
-            
-            
-            Container.Bind<IMapGenerator>().To<MapGenerator>().AsSingle();
-            Container.Bind<IMapService>().To<MapService>().AsSingle();
-            Container.Bind<IMapInteractor>().To<MapInteractor>().AsSingle();
-        }
-
-        private void BindUIServices()
-        {
-            Container.Bind<IUiUtilitiesFactory>().To<UiUtilitiesFactory>().AsSingle();
-            Container.Bind<IUiUtilitiesProvider>().To<UiUtilitiesProvider>().AsSingle();
-
-            Container.Bind<IWindowsFactory>().To<WindowsFactory>().AsSingle();
         }
     }
 }

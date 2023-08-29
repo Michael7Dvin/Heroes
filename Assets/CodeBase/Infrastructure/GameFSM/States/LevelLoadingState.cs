@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Gameplay.Level;
-using CodeBase.Gameplay.Services.MapGenerator;
-using CodeBase.Gameplay.Services.MapService;
-using CodeBase.Gameplay.Services.TeamWinObserver;
+using CodeBase.Gameplay.Services.Map.MapGenerator;
+using CodeBase.Gameplay.Services.Map.MapService;
 using CodeBase.Gameplay.Tiles;
-using CodeBase.Gameplay.Units.Parts.Team;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States.Base;
 using CodeBase.Infrastructure.Services.CameraFactory;
@@ -25,7 +23,6 @@ namespace CodeBase.Infrastructure.GameFSM.States
         private readonly ICameraFactory _cameraFactory;
         private readonly IUiUtilitiesFactory _uiUtilitiesFactory;
         private readonly IWindowsFactory _windowsFactory;
-        private readonly IWinService _winService;
         
         private readonly LevelConfig _levelConfig;
 
@@ -36,8 +33,7 @@ namespace CodeBase.Infrastructure.GameFSM.States
             ICameraFactory cameraFactory,
             IUiUtilitiesFactory uiUtilitiesFactory,
             IWindowsFactory windowsFactory,
-            IStaticDataProvider staticDataProvider,
-            IWinService winService)
+            IStaticDataProvider staticDataProvider)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
@@ -46,9 +42,8 @@ namespace CodeBase.Infrastructure.GameFSM.States
             _cameraFactory = cameraFactory;
             _uiUtilitiesFactory = uiUtilitiesFactory;
             _windowsFactory = windowsFactory;
-            _winService = winService;
 
-            _levelConfig = staticDataProvider.LevelConfig;
+            _levelConfig = staticDataProvider.Configs.Level;
         }
 
         public async void Enter()
@@ -64,8 +59,6 @@ namespace CodeBase.Infrastructure.GameFSM.States
             await _windowsFactory.Create(WindowID.BattleField);
             
             await _cameraFactory.Create();
-
-            _winService.Reset(TeamID.Humans, TeamID.Undeads);
             
             _gameStateMachine.EnterState<UnitsPlacingState, LevelConfig>(_levelConfig);
         }

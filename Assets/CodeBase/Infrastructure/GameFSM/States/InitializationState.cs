@@ -1,9 +1,10 @@
-﻿using CodeBase.Gameplay.Services.MapInteractor;
+﻿using CodeBase.Gameplay.Services.TeamWinObserver;
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States.Base;
 using CodeBase.Infrastructure.Services.InputService;
 using CodeBase.Infrastructure.Services.SceneLoader;
+using CodeBase.Infrastructure.Services.Updater;
 
 namespace CodeBase.Infrastructure.GameFSM.States
 {
@@ -11,29 +12,34 @@ namespace CodeBase.Infrastructure.GameFSM.States
     {
         private readonly IGameStateMachine _gameStateMachine;
         private readonly ISceneLoader _sceneLoader;
-        private readonly IMapInteractor _mapInteractor;
         private readonly IInputService _inputService;
+        private readonly IUpdater _updater;
+        private readonly IWinService _winService;
         private readonly ITurnQueue _turnQueue;
 
         public InitializationState(IGameStateMachine gameStateMachine,
             ISceneLoader sceneLoader,
-            IMapInteractor mapInteractor,
             IInputService inputService,
+            IUpdater updater,
+            IWinService winService,
             ITurnQueue turnQueue)
         {
             _gameStateMachine = gameStateMachine;
             _sceneLoader = sceneLoader;
-            _mapInteractor = mapInteractor;
             _inputService = inputService;
+            _updater = updater;
+            _winService = winService;
             _turnQueue = turnQueue;
         }
 
         public void Enter()
         {
             _sceneLoader.Initialize();
-            _mapInteractor.Initialize();
             _inputService.Initialize();
+            _winService.Initialize();
             _turnQueue.Initialize();
+            
+            _updater.StartUpdating();
             
             _gameStateMachine.EnterState<WarmUppingState>();
         }

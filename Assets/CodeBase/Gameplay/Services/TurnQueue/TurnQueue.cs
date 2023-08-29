@@ -13,8 +13,8 @@ namespace CodeBase.Gameplay.Services.TurnQueue
         private readonly IUnitsProvider _unitsProvider;
         private readonly ICustomLogger _logger;
 
-        private readonly LinkedList<Units.Unit> _units = new();
-        private LinkedListNode<Units.Unit> _activeUnitNode;
+        private readonly LinkedList<Unit> _units = new();
+        private LinkedListNode<Unit> _activeUnitNode;
 
         public TurnQueue(IRandomService randomService, IUnitsProvider unitsProvider, ICustomLogger logger)
         {
@@ -23,15 +23,15 @@ namespace CodeBase.Gameplay.Services.TurnQueue
             _logger = logger;
         }
 
-        public IEnumerable<Units.Unit> Units => _units;
-        public Units.Unit ActiveUnit => _activeUnitNode.Value;
+        public IEnumerable<Unit> Units => _units;
+        public Unit ActiveUnit => _activeUnitNode.Value;
         
         public void Initialize()
         {
             _unitsProvider.Added += Add;
             _unitsProvider.Removed += Remove;
         }
-
+        
         public void CleanUp()
         {
             _unitsProvider.Added -= Add;
@@ -53,7 +53,7 @@ namespace CodeBase.Gameplay.Services.TurnQueue
         public void SetFirstTurn() => 
             _activeUnitNode = _units.Last;
         
-        private void Add(Units.Unit unit)
+        private void Add(Unit unit)
         {
             if (_units.Count == 0)
             {
@@ -63,7 +63,7 @@ namespace CodeBase.Gameplay.Services.TurnQueue
             
             int newGroupInitiative = unit.Initiative;
             
-            LinkedListNode<Units.Unit> currentNode = _units.First;
+            LinkedListNode<Unit> currentNode = _units.First;
 
             while (currentNode != null)
             {
@@ -94,7 +94,7 @@ namespace CodeBase.Gameplay.Services.TurnQueue
             }
         }
 
-        private  void Remove(Units.Unit unit)
+        private  void Remove(Unit unit)
         {
             if (unit == _activeUnitNode.Value)
                 _logger.LogError($"Unable to remove {nameof(ActiveUnit)}. Feature not implemented");

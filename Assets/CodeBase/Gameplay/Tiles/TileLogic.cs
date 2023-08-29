@@ -38,6 +38,18 @@ namespace CodeBase.Gameplay.Tiles
             Unit = null;
             IsOccupied = false;
         }
+
+        public bool TryGetUnit(out Unit unit)
+        {
+            if (IsOccupied == true)
+            {
+                unit = Unit;
+                return true;
+            }
+
+            unit = null;
+            return false;
+        }
         
         private void OnUnitDied()
         {

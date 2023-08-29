@@ -1,6 +1,7 @@
 ﻿using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Configs;
 using CodeBase.Gameplay.Units.Parts.Attacker;
+using CodeBase.Gameplay.Units.Parts.Coordinates;
 using CodeBase.Gameplay.Units.Parts.Death;
 using CodeBase.Gameplay.Units.Parts.Health;
 using CodeBase.Gameplay.Units.Parts.Stack;
@@ -35,7 +36,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             _logger = logger;
             
             _allAssetsAddresses = staticDataProvider.AssetsAddresses;
-            _configs = staticDataProvider.AllUnitsConfigs;
+            _configs = staticDataProvider.Configs.AllUnits;
         }
 
         public async UniTask WarmUp()
