@@ -5,6 +5,7 @@ using CodeBase.Infrastructure.GameFSM.States.Base;
 using CodeBase.Infrastructure.Services.InputService;
 using CodeBase.Infrastructure.Services.SceneLoader;
 using CodeBase.Infrastructure.Services.Updater;
+using DG.Tweening;
 
 namespace CodeBase.Infrastructure.GameFSM.States
 {
@@ -34,11 +35,13 @@ namespace CodeBase.Infrastructure.GameFSM.States
 
         public void Enter()
         {
+            DOTween.Init();
+            
             _sceneLoader.Initialize();
             _inputService.Initialize();
             _winService.Initialize();
             _turnQueue.Initialize();
-            
+
             _updater.StartUpdating();
             
             _gameStateMachine.EnterState<WarmUppingState>();

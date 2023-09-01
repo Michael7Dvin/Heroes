@@ -1,4 +1,4 @@
-﻿using CodeBase.Gameplay.Services.Map.MapService;
+﻿using CodeBase.Gameplay.Services.MapService;
 using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Parts.Team;
@@ -28,6 +28,12 @@ namespace CodeBase.Gameplay.Services.UnitsSpawner
         public async UniTask<Unit> Spawn(Vector2Int coordinates, UnitType unitType, int unitsAmount, TeamID teamID)
         {
             Tile tile = _mapService.GetTile(coordinates);
+            
+            if (tile.Logic.IsWalkable == false)
+            {
+                _logger.LogError($"Unable to spawn {nameof(Unit)}: {unitType} at: {coordinates}. {nameof(TileLogic)} not walkable");
+                return null;
+            }
             
             if (tile.Logic.IsOccupied == true)
             {

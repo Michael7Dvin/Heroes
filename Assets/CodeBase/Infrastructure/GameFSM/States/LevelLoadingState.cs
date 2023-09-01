@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using CodeBase.Gameplay.Level;
-using CodeBase.Gameplay.Services.Map.MapGenerator;
-using CodeBase.Gameplay.Services.Map.MapService;
+using CodeBase.Gameplay.Services.MapGenerator;
+using CodeBase.Gameplay.Services.MapService;
 using CodeBase.Gameplay.Tiles;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States.Base;

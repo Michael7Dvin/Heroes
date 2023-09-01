@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 686701980e8b49d4a3ce1f130bd80165, type: 3}
   m_Name: Zombie Config
   m_EditorClassIdentifier: 
-  <Initiative>k__BackingField: 2
-  <Health>k__BackingField: 30
-  <Damage>k__BackingField: 5
+  <Initiative>k__BackingField: 4
+  <MovePoints>k__BackingField: 2
+  <Health>k__BackingField: 3000
+  <Damage>k__BackingField: 0

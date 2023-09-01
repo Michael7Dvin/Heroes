@@ -1,47 +1,51 @@
-﻿using CodeBase.Gameplay.Services.Map.MapVisualizer;
-using CodeBase.Gameplay.Services.Map.TileInteractor;
-using CodeBase.Gameplay.Services.Map.TileSelector;
-using CodeBase.Gameplay.Services.TeamWinObserver;
+﻿using CodeBase.Gameplay.Services.Mover;
+using CodeBase.Gameplay.Services.TileInteractor;
+using CodeBase.Gameplay.Services.TileSelector;
+using CodeBase.Gameplay.Services.TilesVisualizer;
 using CodeBase.Gameplay.Services.TurnQueue;
-using CodeBase.Gameplay.Units.Parts.Team;
 using CodeBase.Infrastructure.GameFSM.States.Base;
 
 namespace CodeBase.Infrastructure.GameFSM.States
 {
     public class GameplayState : IState
     {
-        private readonly ITurnQueue _turnQueue;
         private readonly ITileSelector _tileSelector;
         private readonly ITileInteractor _tileInteractor;
-        private readonly IMapVisualizer _mapVisualizer;
+        private readonly ITilesVisualizer _tilesVisualizer;
+        private readonly IMover _mover;
+        private readonly ITurnQueue _turnQueue;
 
-        public GameplayState(ITurnQueue turnQueue,
-            ITileSelector tileSelector,
+        public GameplayState(ITileSelector tileSelector,
             ITileInteractor tileInteractor,
-            IMapVisualizer mapVisualizer)
+            ITilesVisualizer tilesVisualizer,
+            IMover mover,
+            ITurnQueue turnQueue)
         {
-            _turnQueue = turnQueue;
             _tileSelector = tileSelector;
             _tileInteractor = tileInteractor;
-            _mapVisualizer = mapVisualizer;
+            _tilesVisualizer = tilesVisualizer;
+            _mover = mover;
+            _turnQueue = turnQueue;
         }
 
         public void Enter()
         {
-            _turnQueue.SetFirstTurn();
-            
             _tileSelector.Enable();
             _tileInteractor.Enable();
-            _mapVisualizer.Enable();
+            _tilesVisualizer.Enable();
+            _mover.Enable();
+            
+            _turnQueue.SetFirstTurn();
         }
 
         public void Exit()
         {
-            _turnQueue.CleanUp();
-            
             _tileSelector.Disable();
             _tileInteractor.Disable();
-            _mapVisualizer.Disable();
+            _tilesVisualizer.Disable();
+            _mover.Disable();
+            
+            _turnQueue.CleanUp();
         }
     }
 }

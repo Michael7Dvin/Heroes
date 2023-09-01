@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CodeBase.Gameplay.Units;
 
@@ -7,7 +8,9 @@ namespace CodeBase.Gameplay.Services.TurnQueue
     {
         IEnumerable<Unit> Units { get; }
         Unit ActiveUnit { get; }
-        
+
+        event Action<Unit> NewTurnStarted; 
+
         void Initialize();
         void CleanUp();
 

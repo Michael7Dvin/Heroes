@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using CodeBase.Gameplay.Services.RandomService;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.Services.Logging;
@@ -25,7 +26,8 @@ namespace CodeBase.Gameplay.Services.TurnQueue
 
         public IEnumerable<Unit> Units => _units;
         public Unit ActiveUnit => _activeUnitNode.Value;
-        
+        public event Action<Unit> NewTurnStarted;
+
         public void Initialize()
         {
             _unitsProvider.Added += Add;
@@ -48,11 +50,15 @@ namespace CodeBase.Gameplay.Services.TurnQueue
             else
                 _activeUnitNode = _activeUnitNode.Previous;
             
+            NewTurnStarted?.Invoke(ActiveUnit);
         }
         
-        public void SetFirstTurn() => 
+        public void SetFirstTurn()
+        {
             _activeUnitNode = _units.Last;
-        
+            NewTurnStarted?.Invoke(ActiveUnit);
+        }
+
         private void Add(Unit unit)
         {
             if (_units.Count == 0)

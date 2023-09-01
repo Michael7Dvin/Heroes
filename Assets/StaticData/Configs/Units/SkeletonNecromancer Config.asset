@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f4d8bb8fa64b869ab1d17e57944ce7, type: 3}
   m_Name: SkeletonNecromancer Config
   m_EditorClassIdentifier: 
-  <Initiative>k__BackingField: 3
-  <Health>k__BackingField: 20
-  <Damage>k__BackingField: 7
+  <Initiative>k__BackingField: 6
+  <MovePoints>k__BackingField: 3
+  <Health>k__BackingField: 6
+  <Damage>k__BackingField: 6

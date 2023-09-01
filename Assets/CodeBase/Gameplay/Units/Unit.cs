@@ -13,6 +13,7 @@ namespace CodeBase.Gameplay.Units
         public Unit(UnitType type,
             GameObject gameObject,
             int initiative,
+            int movePoints,
             UnitTeam team,
             UnitCoordinates coordinates,
             UnitStack stack,
@@ -23,6 +24,7 @@ namespace CodeBase.Gameplay.Units
             Type = type;
             GameObject = gameObject;
             Initiative = initiative;
+            MovePoints = movePoints;
             Team = team;
             Coordinates = coordinates;
             Stack = stack;
@@ -34,6 +36,7 @@ namespace CodeBase.Gameplay.Units
         public UnitType Type { get; }
         public GameObject GameObject { get; }
         public int Initiative { get; }
+        public int MovePoints { get; }
 
         public UnitTeam Team { get; }
         public UnitCoordinates Coordinates { get; }

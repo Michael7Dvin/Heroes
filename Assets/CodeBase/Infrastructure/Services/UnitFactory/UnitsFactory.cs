@@ -84,7 +84,17 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight,
+                gameObject,
+                config.Initiative,
+                config.MovePoints,
+                team,
+                coordinates,
+                stack,
+                attacker,
+                health,
+                death);
+            
             return unit;
         }
 
@@ -102,7 +112,17 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight,
+                gameObject,
+                config.Initiative,
+                config.MovePoints,
+                team,
+                coordinates,
+                stack,
+                attacker,
+                health,
+                death);
+            
             return unit;
         }
 
@@ -120,7 +140,17 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight,
+                gameObject,
+                config.Initiative,
+                config.MovePoints,
+                team,
+                coordinates,
+                stack,
+                attacker,
+                health,
+                death);
+            
             return unit;
         }
 
@@ -138,7 +168,16 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight,
+                gameObject,
+                config.Initiative,
+                config.MovePoints,
+                team,
+                coordinates,
+                stack,
+                attacker,
+                health,
+                death);
             return unit;
         }
 
@@ -156,7 +195,16 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
 
             GameObject gameObject = await CreateView(position, death, stack, team, address);
 
-            Unit unit = new(UnitType.Knight, gameObject, config.Initiative, team, coordinates, stack, attacker, health, death);
+            Unit unit = new(UnitType.Knight,
+                gameObject,
+                config.Initiative,
+                config.MovePoints,
+                team,
+                coordinates,
+                stack,
+                attacker,
+                health,
+                death);
             return unit;
         }
 

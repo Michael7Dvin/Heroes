@@ -1,14 +1,15 @@
-﻿using UnityEngine;
+﻿using CodeBase.Common.Observable;
+using UnityEngine;
 
 namespace CodeBase.Gameplay.Units.Parts.Coordinates
 {
     public class UnitCoordinates
     {
-        public Vector2Int Value { get; private set; }
+        private readonly Observable<Vector2Int> _observable = new();
+        
+        public IReadOnlyObservable<Vector2Int> Observable => _observable;
 
-        public void Set(Vector2Int coordinates)
-        {
-            Value = coordinates;
-        }
+        public void Set(Vector2Int coordinates) =>
+            _observable.Value = coordinates;
     }
 }

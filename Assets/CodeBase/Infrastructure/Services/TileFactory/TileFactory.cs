@@ -13,7 +13,6 @@ namespace CodeBase.Infrastructure.Services.TileFactory
         private readonly IObjectsInstantiator _instantiator;
         private readonly IAddressablesLoader _addressablesLoader;
         private readonly AssetReferenceGameObject _tileAddress;
-        private readonly TileViewColorsConfig _tileViewColorsConfig;
         
         public TileFactory(IObjectsInstantiator instantiator,
             IAddressablesLoader addressablesLoader,
@@ -22,19 +21,19 @@ namespace CodeBase.Infrastructure.Services.TileFactory
             _instantiator = instantiator;
             _addressablesLoader = addressablesLoader;
             _tileAddress = staticDataProvider.AssetsAddresses.Tile;
-            _tileViewColorsConfig = staticDataProvider.Configs.TileViewColors;
         }
 
         public async UniTask WarmUp() => 
             await _addressablesLoader.LoadGameObject(_tileAddress);
 
-        public async UniTask<Tile> Create(Vector3 position, Vector2Int coordinates)
+        public async UniTask<Tile> Create(Vector3 position, Vector2Int coordinates, bool isWalkable)
         {
             TileView prefab = await _addressablesLoader.LoadComponent<TileView>(_tileAddress);
             TileView view = _instantiator.InstantiatePrefabForComponent<TileView>(prefab, position, Quaternion.identity);
-            view.Construct(coordinates, _tileViewColorsConfig);
+            view.Construct(coordinates);
             
             TileLogic logic = _instantiator.Instantiate<TileLogic>();
+            logic.Construct(isWalkable);
             
             return new Tile(logic, view);
         }

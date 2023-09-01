@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Knight Config
   m_EditorClassIdentifier: 
   <Initiative>k__BackingField: 4
+  <MovePoints>k__BackingField: 5
   <Health>k__BackingField: 20
-  <Damage>k__BackingField: 3
+  <Damage>k__BackingField: 7

@@ -5,19 +5,17 @@ namespace CodeBase.Gameplay.Tiles
     [RequireComponent(typeof(SpriteRenderer), typeof(PolygonCollider2D))]
     public class TileView : MonoBehaviour
     {
-        private readonly int _enableOutline = Shader.PropertyToID("_EnableOutline");
-        private readonly int _outlineColor = Shader.PropertyToID("_OutlineColor");
-        private readonly int _enableHighLight = Shader.PropertyToID("_EnableHighlight");
-        private readonly int _highlightColor = Shader.PropertyToID("_HighlightColor");
+        private readonly int _enableOutlineID = Shader.PropertyToID("_EnableOutline");
+        private readonly int _outlineColorID = Shader.PropertyToID("_OutlineColor");
+        private readonly int _enableHighLightID = Shader.PropertyToID("_EnableHighlight");
+        private readonly int _highlightColorID = Shader.PropertyToID("_HighlightColor");
 
-        private TileViewColorsConfig _config;
         private SpriteRenderer _renderer;
         private Material _tileMaterial;
         
-        public void Construct(Vector2Int coordinates, TileViewColorsConfig tileViewColorsConfig)
+        public void Construct(Vector2Int coordinates)
         {
             Coordinates = coordinates;
-            _config = tileViewColorsConfig;
         }
 
         public Vector2Int Coordinates { get; private set; }
@@ -28,49 +26,17 @@ namespace CodeBase.Gameplay.Tiles
             _tileMaterial = _renderer.material;
         }
 
-        public void SwitchMovableEffect(bool value)
-        {
-            if (value == true)
-            {
-                SetColor(_highlightColor, _config.MovableHighlightColor);
-                SetBool(_enableHighLight, true);
-            }
-            else
-                SetBool(_enableHighLight, false);
-        }
+        public void SwitchOutLine(bool isEnabled) => 
+            SetBool(_enableOutlineID, isEnabled);
+
+        public void ChangeOutLineColor(Color color) =>
+            SetColor(_outlineColorID, color);
         
-        public void SwitchAttackableEffect(bool value)
-        {
-            if (value == true)
-            {
-                SetColor(_highlightColor, _config.AttackableHighlightColor);
-                SetBool(_enableHighLight, true);
-            }
-            else
-                SetBool(_enableHighLight, false);
-        }
+        public void SwitchHighlight(bool isEnabled) =>
+            SetBool(_enableHighLightID, isEnabled);
 
-        public void SwitchMoveTargetEffect(bool value)
-        {
-            if (value == true)
-            {
-                SetColor(_outlineColor, _config.MoveTargetOutlineColor);
-                SetBool(_enableOutline, true);
-            }
-            else
-                SetBool(_enableOutline, false);
-        }
-
-        public void SwitchAttackTargetEffect(bool value)
-        {
-            if (value == true)
-            {
-                SetColor(_outlineColor, _config.AttackTargetOutlineColor);
-                SetBool(_enableOutline, true);
-            }
-            else
-                SetBool(_enableOutline, false);
-        }
+        public void ChangeHighlightColor(Color color) => 
+            SetColor(_highlightColorID, color);
 
         private void SetColor(int propertyID, Color color) => 
             _tileMaterial.SetColor(propertyID, color);

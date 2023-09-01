@@ -6,14 +6,24 @@ namespace CodeBase.Gameplay.Tiles
     public class TileLogic
     {
         private readonly ICustomLogger _logger;
+        
+        private bool _isWalkable;
+        private Unit _unit;
 
         public TileLogic(ICustomLogger logger)
         {
             _logger = logger;
         }
-        
+
+        public void Construct(bool isWalkable)
+        {
+            _isWalkable = isWalkable;
+        }
+
+        public bool IsWalkable => 
+            _isWalkable && IsOccupied == false;
+
         public bool IsOccupied { get; private set; }
-        public Unit Unit { get; private set; }
 
         public void Occupy(Unit unit)
         {
@@ -23,7 +33,7 @@ namespace CodeBase.Gameplay.Tiles
                 return;
             }
 
-            Unit = unit;
+            _unit = unit;
             IsOccupied = true;
             unit.Death.Died += OnUnitDied;
         }
@@ -33,9 +43,9 @@ namespace CodeBase.Gameplay.Tiles
             if (IsOccupied == false)
                 _logger.LogWarning($"Trying to release not occupied {nameof(TileLogic)}");
 
-            Unit.Death.Died -= OnUnitDied;
+            _unit.Death.Died -= OnUnitDied;
             
-            Unit = null;
+            _unit = null;
             IsOccupied = false;
         }
 
@@ -43,7 +53,7 @@ namespace CodeBase.Gameplay.Tiles
         {
             if (IsOccupied == true)
             {
-                unit = Unit;
+                unit = _unit;
                 return true;
             }
 
@@ -53,7 +63,7 @@ namespace CodeBase.Gameplay.Tiles
         
         private void OnUnitDied()
         {
-            Unit.Death.Died -= OnUnitDied;
+            _unit.Death.Died -= OnUnitDied;
             Release();
         }
     }
