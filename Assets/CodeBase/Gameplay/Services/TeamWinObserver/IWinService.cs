@@ -1,4 +1,4 @@
-using CodeBase.Gameplay.Units.Parts.Team;
+using CodeBase.Gameplay.Units.Logic.Parts.Team;
 
 namespace CodeBase.Gameplay.Services.TeamWinObserver
 {

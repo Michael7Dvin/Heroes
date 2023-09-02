@@ -1,48 +1,17 @@
-﻿using CodeBase.Gameplay.Units.Parts.Attacker;
-using CodeBase.Gameplay.Units.Parts.Coordinates;
-using CodeBase.Gameplay.Units.Parts.Death;
-using CodeBase.Gameplay.Units.Parts.Health;
-using CodeBase.Gameplay.Units.Parts.Stack;
-using CodeBase.Gameplay.Units.Parts.Team;
-using UnityEngine;
+﻿using CodeBase.Gameplay.Units.Logic;
+using CodeBase.Gameplay.Units.View;
 
 namespace CodeBase.Gameplay.Units
 {
     public class Unit
     {
-        public Unit(UnitType type,
-            GameObject gameObject,
-            int initiative,
-            int movePoints,
-            UnitTeam team,
-            UnitCoordinates coordinates,
-            UnitStack stack,
-            IUnitAttacker attacker,
-            IUnitHealth health,
-            IUnitDeath death)
+        public Unit(UnitLogic logic, UnitView view)
         {
-            Type = type;
-            GameObject = gameObject;
-            Initiative = initiative;
-            MovePoints = movePoints;
-            Team = team;
-            Coordinates = coordinates;
-            Stack = stack;
-            Attacker = attacker;
-            Health = health;
-            Death = death;
+            Logic = logic;
+            View = view;
         }
 
-        public UnitType Type { get; }
-        public GameObject GameObject { get; }
-        public int Initiative { get; }
-        public int MovePoints { get; }
-
-        public UnitTeam Team { get; }
-        public UnitCoordinates Coordinates { get; }
-        public UnitStack Stack { get; }
-        public IUnitAttacker Attacker { get; }
-        public IUnitHealth Health { get; }
-        public IUnitDeath Death { get; }
+        public UnitLogic Logic { get; }
+        public UnitView View { get; }
     }
 }

@@ -14,12 +14,12 @@ namespace CodeBase.Infrastructure.Services.UnitsProvider
         public void Add(Unit unit)
         {
             _units.Add(unit);
-            unit.Death.Died += OnGroupDied;
+            unit.Logic.Death.Died += OnGroupDied;
             Added?.Invoke(unit);
 
             void OnGroupDied()
             {
-                unit.Death.Died -= OnGroupDied;
+                unit.Logic.Death.Died -= OnGroupDied;
                 Remove(unit);
             }
         }

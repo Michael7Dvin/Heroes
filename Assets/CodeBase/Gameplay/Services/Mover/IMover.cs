@@ -12,5 +12,6 @@ namespace CodeBase.Gameplay.Services.Mover
         bool IsMovableAt(Tile tile);
         void MoveActiveUnit(Tile tile);
         IReadOnlyObservable<PathFindingResults> CurrentPathFindingResults { get; }
+        bool IsActiveUnitMoving { get; }
     }
 }

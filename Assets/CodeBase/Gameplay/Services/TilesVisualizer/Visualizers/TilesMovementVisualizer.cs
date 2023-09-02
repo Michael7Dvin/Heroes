@@ -14,6 +14,7 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         private readonly IMapService _mapService;
         private readonly IMover _mover;
         private readonly ITileSelector _tileSelector;
+        private readonly ActiveUnitTileVisualizer _activeUnitTileVisualizer;
         private readonly TileViewColorsConfig _tileViewColors;
 
         private readonly List<TileView> _visualizedMovableTiles = new();
@@ -22,11 +23,14 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         public TilesMovementVisualizer(IMapService mapService,
             IMover mover,
             ITileSelector tileSelector,
+            ActiveUnitTileVisualizer activeUnitTileVisualizer,
             IStaticDataProvider staticDataProvider)
         {
             _mapService = mapService;
             _mover = mover;
             _tileSelector = tileSelector;
+            _activeUnitTileVisualizer = activeUnitTileVisualizer;
+            
             _tileViewColors = staticDataProvider.Configs.TileViewColors;
         }
 
@@ -107,6 +111,8 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
 
         private void ClearMovableTilesVisualization()
         {
+            _visualizedMovableTiles.Remove(_activeUnitTileVisualizer.ActiveUnitTileView); 
+            
             foreach (TileView tileView in _visualizedMovableTiles)
                 tileView.SwitchHighlight(false);
 

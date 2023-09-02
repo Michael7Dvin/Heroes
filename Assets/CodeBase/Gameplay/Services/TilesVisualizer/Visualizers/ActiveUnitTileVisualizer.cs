@@ -2,6 +2,7 @@
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
+using CodeBase.Gameplay.Units.Logic;
 using CodeBase.Infrastructure.Services.StaticDataProvider;
 using UnityEngine;
 
@@ -13,7 +14,7 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         private readonly IMapService _mapService;
         private readonly TileViewColorsConfig _tileViewColors;
 
-        private Unit _activeUnit;
+        private UnitLogic _activeUnitLogic;
 
         public ActiveUnitTileVisualizer(ITurnQueue turnQueue,
             IMapService mapService,
@@ -34,13 +35,13 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
 
         private void OnNewTurnStarted(Unit unit)
         {
-            if (_activeUnit != null) 
-                _activeUnit.Coordinates.Observable.Changed -= ClearPreviousTileAndVisualizeNew;
+            if (_activeUnitLogic != null) 
+                _activeUnitLogic.Coordinates.Observable.Changed -= ClearPreviousTileAndVisualizeNew;
 
-            _activeUnit = _turnQueue.ActiveUnit;
-            _activeUnit.Coordinates.Observable.Changed += ClearPreviousTileAndVisualizeNew;
+            _activeUnitLogic = _turnQueue.ActiveUnit.Logic;
+            _activeUnitLogic.Coordinates.Observable.Changed += ClearPreviousTileAndVisualizeNew;
 
-            ClearPreviousTileAndVisualizeNew(_activeUnit.Coordinates.Observable.Value);
+            ClearPreviousTileAndVisualizeNew(_activeUnitLogic.Coordinates.Observable.Value);
         }
         
         private void ClearPreviousTileAndVisualizeNew(Vector2Int coordinates)

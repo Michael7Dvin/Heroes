@@ -3,7 +3,9 @@ using CodeBase.Gameplay.Services.TileSelector;
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
-using CodeBase.Gameplay.Units.Parts.Team;
+using CodeBase.Gameplay.Units.Logic;
+using CodeBase.Gameplay.Units.Logic.Parts.Health;
+using CodeBase.Gameplay.Units.Logic.Parts.Team;
 using CodeBase.Infrastructure.Services.InputService;
 
 namespace CodeBase.Gameplay.Services.TileInteractor
@@ -29,8 +31,8 @@ namespace CodeBase.Gameplay.Services.TileInteractor
         private Tile SelectedTile =>
             _tileSelector.SelectedTile.Value;
 
-        private Unit ActiveUnit => 
-            _turnQueue.ActiveUnit;
+        private UnitLogic ActiveUnitLogic => 
+            _turnQueue.ActiveUnit.Logic;
         
         public void Enable() => 
             _inputService.NormalInteracted += Interact;
@@ -44,25 +46,22 @@ namespace CodeBase.Gameplay.Services.TileInteractor
             {
                 if (SelectedTile.Logic.TryGetUnit(out Unit unit))
                 {
-                    if (IsEnemy(unit) == true)
-                        AttackUnit(unit);
+                    if (IsEnemy(unit.Logic.Team.Current.Value) == true)
+                        AttackUnit(unit.Logic.Health);
                 }
-                else if (_mover.IsMovableAt(SelectedTile)) 
+                else if (_mover.IsMovableAt(SelectedTile) == true && _mover.IsActiveUnitMoving == false) 
                     _mover.MoveActiveUnit(SelectedTile);
             }
         }
 
-        private bool IsEnemy(Unit unit)
+        private bool IsEnemy(TeamID unitTeamID)
         {
-            TeamID activeUnitTeamID = ActiveUnit.Team.Current.Value;
-            TeamID unitAtTileTeamID = unit.Team.Current.Value;
+            TeamID activeUnitTeamID = ActiveUnitLogic.Team.Current.Value;
 
-            return activeUnitTeamID != unitAtTileTeamID;
+            return activeUnitTeamID != unitTeamID;
         }
 
-        private void AttackUnit(Unit unit) => 
-            ActiveUnit.Attacker.Attack(unit);
-
-        
+        private void AttackUnit(IUnitHealth unitHealth) => 
+            ActiveUnitLogic.Attacker.Attack(unitHealth);
     }
 }

@@ -1,11 +1,16 @@
 ﻿using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Configs;
-using CodeBase.Gameplay.Units.Parts.Attacker;
-using CodeBase.Gameplay.Units.Parts.Coordinates;
-using CodeBase.Gameplay.Units.Parts.Death;
-using CodeBase.Gameplay.Units.Parts.Health;
-using CodeBase.Gameplay.Units.Parts.Stack;
-using CodeBase.Gameplay.Units.Parts.Team;
+using CodeBase.Gameplay.Units.Logic;
+using CodeBase.Gameplay.Units.Logic.Parts.Attacker;
+using CodeBase.Gameplay.Units.Logic.Parts.Coordinates;
+using CodeBase.Gameplay.Units.Logic.Parts.Death;
+using CodeBase.Gameplay.Units.Logic.Parts.Health;
+using CodeBase.Gameplay.Units.Logic.Parts.Mover;
+using CodeBase.Gameplay.Units.Logic.Parts.Stack;
+using CodeBase.Gameplay.Units.Logic.Parts.Team;
+using CodeBase.Gameplay.Units.View;
+using CodeBase.Gameplay.Units.View.Parts.DeathAnimator;
+using CodeBase.Gameplay.Units.View.Parts.PathMoveAnimator;
 using CodeBase.Infrastructure.Services.AddressablesLoader;
 using CodeBase.Infrastructure.Services.AddressablesLoader.AssetAddresses;
 using CodeBase.Infrastructure.Services.Instantiator;
@@ -39,16 +44,8 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             _configs = staticDataProvider.Configs.AllUnits;
         }
 
-        public async UniTask WarmUp()
-        {
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.EmptyGameObject);
-            
+        public async UniTask WarmUp() => 
             await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.Knight);
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.Archer);
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.Zombie);
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.SkeletonNecromancer);
-            await _addressablesLoader.LoadGameObject(_allAssetsAddresses.Units.Skeleton);
-        }
 
         public async UniTask<Unit> Create(Vector3 position, UnitType unitType, int unitsCount, TeamID teamID)
         {
@@ -56,14 +53,6 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             {
                 case UnitType.Knight:
                     return await CreateKnight(position, unitsCount, teamID);
-                case UnitType.Archer:
-                    return await CreateArcher(position, unitsCount, teamID);
-                case UnitType.SkeletonNecromancer:
-                    return await CreateSkeletonNecromancer(position, unitsCount, teamID);
-                case UnitType.Skeleton:
-                    return await CreateSkeleton(position, unitsCount, teamID);
-                case UnitType.Zombie:
-                    return await CreateZombie(position, unitsCount, teamID); 
                 default:
                     _logger.LogError($"Unsupported {nameof(UnitType)}: '{unitType}'");
                     return null;
@@ -78,152 +67,47 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             UnitTeam team = new(teamID);
             UnitCoordinates coordinates = new();
             UnitStack stack = new(stackAmount);
+            UnitMover mover = new UnitMover(config.MovePoints);
             UnitAttacker attacker = new(config.Damage, stack);
-            UnitDeath death = new();
-            UnitHealth health = new(config.Health, stack, death);
+            UnitHealth health = new(config.Health, stack);
+            UnitDeath death = new(stack);
 
-            GameObject gameObject = await CreateView(position, death, stack, team, address);
-
-            Unit unit = new(UnitType.Knight,
-                gameObject,
+            UnitView view = await CreateView(position, stack, team, death, config.AnimationMoveSpeed, address);
+            
+            UnitLogic logic = new(UnitType.Knight,
                 config.Initiative,
-                config.MovePoints,
                 team,
                 coordinates,
                 stack,
+                mover,
                 attacker,
                 health,
                 death);
+
+            Unit unit = new(logic, view);
             
             return unit;
         }
 
-        private async UniTask<Unit> CreateArcher(Vector3 position, int stackAmount, TeamID teamID)
-        {
-            ArcherConfig config = _configs.Archer;
-            AssetReferenceGameObject address = _allAssetsAddresses.Units.Archer;
-            
-            UnitTeam team = new(teamID);
-            UnitCoordinates coordinates = new();
-            UnitStack stack = new(stackAmount);
-            UnitAttacker attacker = new(config.Damage, stack);
-            UnitDeath death = new();
-            UnitHealth health = new(config.Health, stack, death);
-
-            GameObject gameObject = await CreateView(position, death, stack, team, address);
-
-            Unit unit = new(UnitType.Knight,
-                gameObject,
-                config.Initiative,
-                config.MovePoints,
-                team,
-                coordinates,
-                stack,
-                attacker,
-                health,
-                death);
-            
-            return unit;
-        }
-
-        private async UniTask<Unit> CreateZombie(Vector3 position, int stackAmount, TeamID teamID)
-        {
-            ZombieConfig config = _configs.Zombie;
-            AssetReferenceGameObject address = _allAssetsAddresses.Units.Zombie;
-            
-            UnitTeam team = new(teamID);
-            UnitCoordinates coordinates = new();
-            UnitStack stack = new(stackAmount);
-            UnitAttacker attacker = new(config.Damage, stack);
-            UnitDeath death = new();
-            UnitHealth health = new(config.Health, stack, death);
-
-            GameObject gameObject = await CreateView(position, death, stack, team, address);
-
-            Unit unit = new(UnitType.Knight,
-                gameObject,
-                config.Initiative,
-                config.MovePoints,
-                team,
-                coordinates,
-                stack,
-                attacker,
-                health,
-                death);
-            
-            return unit;
-        }
-
-        private async UniTask<Unit> CreateSkeletonNecromancer(Vector3 position, int stackAmount, TeamID teamID)
-        {
-            SkeletonNecromancerConfig config = _configs.SkeletonNecromancer;
-            AssetReferenceGameObject address = _allAssetsAddresses.Units.SkeletonNecromancer;
-            
-            UnitTeam team = new(teamID);
-            UnitCoordinates coordinates = new();
-            UnitStack stack = new(stackAmount);
-            UnitAttacker attacker = new(config.Damage, stack);
-            UnitDeath death = new();
-            UnitHealth health = new(config.Health, stack, death);
-
-            GameObject gameObject = await CreateView(position, death, stack, team, address);
-
-            Unit unit = new(UnitType.Knight,
-                gameObject,
-                config.Initiative,
-                config.MovePoints,
-                team,
-                coordinates,
-                stack,
-                attacker,
-                health,
-                death);
-            return unit;
-        }
-
-        private async UniTask<Unit> CreateSkeleton(Vector3 position, int stackAmount, TeamID teamID)
-        {
-            SkeletonConfig config = _configs.Skeleton;
-            AssetReferenceGameObject address = _allAssetsAddresses.Units.Skeleton;
-            
-            UnitTeam team = new(teamID);
-            UnitCoordinates coordinates = new();
-            UnitStack stack = new(stackAmount);
-            UnitAttacker attacker = new(config.Damage, stack);
-            UnitDeath death = new();
-            UnitHealth health = new(config.Health, stack, death);
-
-            GameObject gameObject = await CreateView(position, death, stack, team, address);
-
-            Unit unit = new(UnitType.Knight,
-                gameObject,
-                config.Initiative,
-                config.MovePoints,
-                team,
-                coordinates,
-                stack,
-                attacker,
-                health,
-                death);
-            return unit;
-        }
-
-        private async UniTask<GameObject> CreateView(Vector3 position,
-            IUnitDeath death,
+        
+        private async UniTask<UnitView> CreateView(Vector3 position,
             UnitStack stack,
             UnitTeam team,
+            IUnitDeath unitDeath,
+            float animationMoveSpeed,
             AssetReferenceGameObject address)
         {
             GameObject prefab = await _addressablesLoader.LoadGameObject(address);
             GameObject gameObject = _instantiator.InstantiatePrefab(prefab, position, Quaternion.identity);
-            
-            UnitView view = gameObject.GetComponentInChildren<UnitView>();
-            view.Construct(death);
 
+            DeathAnimator deathAnimator = new(gameObject, unitDeath);
+            GroundPathMoveAnimator groundPathMoveAnimator = new(gameObject.transform, animationMoveSpeed);
+            UnitView unitView = new(deathAnimator, groundPathMoveAnimator);
+            
             UnitCounter counter = gameObject.GetComponentInChildren<UnitCounter>();
             counter.Construct(stack, team);
 
-            return gameObject;
+            return unitView;
         }
     }
 }

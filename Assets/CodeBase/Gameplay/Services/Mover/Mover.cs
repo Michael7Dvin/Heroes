@@ -6,6 +6,7 @@ using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.Services.Logging;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Services.Mover
@@ -18,6 +19,7 @@ namespace CodeBase.Gameplay.Services.Mover
         private readonly ICustomLogger _logger;
 
         private readonly Observable<PathFindingResults> _currentPathFindingResults = new();
+
         private int _activeUnitMovePoints;
 
         public Mover(IPathFinder pathFinder, ITurnQueue turnQueue, IMapService mapService, ICustomLogger logger)
@@ -29,6 +31,7 @@ namespace CodeBase.Gameplay.Services.Mover
         }
 
         public IReadOnlyObservable<PathFindingResults> CurrentPathFindingResults => _currentPathFindingResults;
+        public bool IsActiveUnitMoving { get; private set; }
 
         public void Enable() => 
             _turnQueue.NewTurnStarted += OnTurnStarted;
@@ -39,7 +42,7 @@ namespace CodeBase.Gameplay.Services.Mover
         public bool IsMovableAt(Tile tile) =>
             _currentPathFindingResults.Value.IsMovableAt(tile.View.Coordinates);
 
-        public void MoveActiveUnit(Tile tile)
+        public async void MoveActiveUnit(Tile tile)
         {
             if (IsMovableAt(tile) == false)
             {
@@ -47,21 +50,26 @@ namespace CodeBase.Gameplay.Services.Mover
                 return;
             }
 
-            List<Vector2Int> pathPoints = _currentPathFindingResults.Value.GetPathTo(tile.View.Coordinates);
+            IsActiveUnitMoving = true;
+            
+            Vector2Int destination = tile.View.Coordinates;
+            List<Vector2Int> pathCoordinates = _currentPathFindingResults.Value.GetPathTo(destination);
 
             Unit activeUnit = _turnQueue.ActiveUnit;
-            Tile unitTile = _mapService.GetTile(activeUnit.Coordinates.Observable.Value);
+            Tile unitTile = _mapService.GetTile(activeUnit.Logic.Coordinates.Observable.Value);
             
             unitTile.Logic.Release();
 
-            ChangeUnitWorldPosition(activeUnit, tile.View.transform.position);
-            activeUnit.Coordinates.Set(tile.View.Coordinates);
-            
+            await MoveUnitAlongPath(activeUnit, pathCoordinates);
+
+            activeUnit.Logic.Coordinates.Set(destination);
             tile.Logic.Occupy(activeUnit);
 
-            int pathDistance = pathPoints.Count;
+            int pathDistance = pathCoordinates.Count;
             SetActiveUnitMovePoints(_activeUnitMovePoints - pathDistance);
-            UpdatePathFindingResults(activeUnit.Coordinates.Observable.Value, _activeUnitMovePoints);
+            UpdatePathFindingResults(activeUnit.Logic.Coordinates.Observable.Value, _activeUnitMovePoints);
+            
+            IsActiveUnitMoving = false;
         }
 
         private void SetActiveUnitMovePoints(int movePoints) => 
@@ -70,13 +78,21 @@ namespace CodeBase.Gameplay.Services.Mover
         private void UpdatePathFindingResults(Vector2Int startCoordinates, int movePoints) => 
             _currentPathFindingResults.Value = _pathFinder.FindPathsByBFS(startCoordinates, movePoints);
 
-        private void ChangeUnitWorldPosition(Unit unit, Vector3 position) =>
-            unit.GameObject.transform.position = position;
+        private async UniTask MoveUnitAlongPath(Unit unit, IReadOnlyList<Vector2Int> pathCoordinates)
+        {
+            int pointsCount = pathCoordinates.Count;
+            Vector3[] pathPositions = new Vector3[pointsCount]; 
+            
+            for (int i = 0; i < pointsCount; i++)
+                pathPositions[i] = _mapService.GetTile(pathCoordinates[i]).View.transform.position;
+
+            await unit.View.PathMoveAnimator.MoveAlongPath(pathPositions);
+        }
 
         private void OnTurnStarted(Unit activeUnit)
         {
-            SetActiveUnitMovePoints(activeUnit.MovePoints);
-            UpdatePathFindingResults(activeUnit.Coordinates.Observable.Value, activeUnit.MovePoints);
+            SetActiveUnitMovePoints(activeUnit.Logic.Mover.MovePoints);
+            UpdatePathFindingResults(activeUnit.Logic.Coordinates.Observable.Value, activeUnit.Logic.Mover.MovePoints);
         }
     }
 }

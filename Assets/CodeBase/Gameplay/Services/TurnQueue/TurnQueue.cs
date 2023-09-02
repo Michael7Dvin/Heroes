@@ -4,7 +4,6 @@ using CodeBase.Gameplay.Services.RandomService;
 using CodeBase.Gameplay.Units;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.UnitsProvider;
-using CodeBase.UI;
 
 namespace CodeBase.Gameplay.Services.TurnQueue
 {
@@ -67,13 +66,13 @@ namespace CodeBase.Gameplay.Services.TurnQueue
                 return;
             }
             
-            int newGroupInitiative = unit.Initiative;
+            int newGroupInitiative = unit.Logic.Initiative;
             
             LinkedListNode<Unit> currentNode = _units.First;
 
             while (currentNode != null)
             {
-                int currentNodeGroupInitiative = currentNode.Value.Initiative;
+                int currentNodeGroupInitiative = currentNode.Value.Logic.Initiative;
 
                 if (newGroupInitiative == currentNodeGroupInitiative)
                 {
@@ -100,7 +99,7 @@ namespace CodeBase.Gameplay.Services.TurnQueue
             }
         }
 
-        private  void Remove(Unit unit)
+        private void Remove(Unit unit)
         {
             if (unit == _activeUnitNode.Value)
                 _logger.LogError($"Unable to remove {nameof(ActiveUnit)}. Feature not implemented");

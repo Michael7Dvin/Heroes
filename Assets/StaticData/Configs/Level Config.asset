@@ -13,39 +13,11 @@ MonoBehaviour:
   m_Name: Level Config
   m_EditorClassIdentifier: 
   <Units>k__BackingField:
-  - <Coordinates>k__BackingField: {x: 1, y: 5}
+  - <Coordinates>k__BackingField: {x: 0, y: 0}
     <UnitType>k__BackingField: 0
     <Amount>k__BackingField: 20
     <TeamID>k__BackingField: 0
-  - <Coordinates>k__BackingField: {x: 0, y: 4}
+  - <Coordinates>k__BackingField: {x: 14, y: 10}
     <UnitType>k__BackingField: 0
     <Amount>k__BackingField: 20
-    <TeamID>k__BackingField: 0
-  - <Coordinates>k__BackingField: {x: 0, y: 6}
-    <UnitType>k__BackingField: 0
-    <Amount>k__BackingField: 20
-    <TeamID>k__BackingField: 0
-  - <Coordinates>k__BackingField: {x: 0, y: 5}
-    <UnitType>k__BackingField: 1
-    <Amount>k__BackingField: 40
-    <TeamID>k__BackingField: 0
-  - <Coordinates>k__BackingField: {x: 14, y: 3}
-    <UnitType>k__BackingField: 2
-    <Amount>k__BackingField: 50
-    <TeamID>k__BackingField: 1
-  - <Coordinates>k__BackingField: {x: 14, y: 4}
-    <UnitType>k__BackingField: 2
-    <Amount>k__BackingField: 50
-    <TeamID>k__BackingField: 1
-  - <Coordinates>k__BackingField: {x: 14, y: 6}
-    <UnitType>k__BackingField: 2
-    <Amount>k__BackingField: 50
-    <TeamID>k__BackingField: 1
-  - <Coordinates>k__BackingField: {x: 14, y: 7}
-    <UnitType>k__BackingField: 2
-    <Amount>k__BackingField: 50
-    <TeamID>k__BackingField: 1
-  - <Coordinates>k__BackingField: {x: 14, y: 5}
-    <UnitType>k__BackingField: 4
-    <Amount>k__BackingField: 1
     <TeamID>k__BackingField: 1

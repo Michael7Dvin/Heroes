@@ -1,4 +1,5 @@
 ﻿using CodeBase.Gameplay.Units;
+using CodeBase.Gameplay.Units.Logic;
 using CodeBase.Infrastructure.Services.Logging;
 
 namespace CodeBase.Gameplay.Tiles
@@ -35,7 +36,7 @@ namespace CodeBase.Gameplay.Tiles
 
             _unit = unit;
             IsOccupied = true;
-            unit.Death.Died += OnUnitDied;
+            unit.Logic.Death.Died += OnUnitDied;
         }
 
         public void Release()
@@ -43,7 +44,7 @@ namespace CodeBase.Gameplay.Tiles
             if (IsOccupied == false)
                 _logger.LogWarning($"Trying to release not occupied {nameof(TileLogic)}");
 
-            _unit.Death.Died -= OnUnitDied;
+            _unit.Logic.Death.Died -= OnUnitDied;
             
             _unit = null;
             IsOccupied = false;
@@ -63,7 +64,7 @@ namespace CodeBase.Gameplay.Tiles
         
         private void OnUnitDied()
         {
-            _unit.Death.Died -= OnUnitDied;
+            _unit.Logic.Death.Died -= OnUnitDied;
             Release();
         }
     }

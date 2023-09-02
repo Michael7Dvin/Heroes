@@ -1,6 +1,6 @@
 ﻿using System;
 using CodeBase.Gameplay.Units;
-using CodeBase.Gameplay.Units.Parts.Team;
+using CodeBase.Gameplay.Units.Logic.Parts.Team;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Level

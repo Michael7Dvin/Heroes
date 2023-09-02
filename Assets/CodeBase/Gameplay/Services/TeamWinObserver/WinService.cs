@@ -1,5 +1,5 @@
 ﻿using CodeBase.Gameplay.Units;
-using CodeBase.Gameplay.Units.Parts.Team;
+using CodeBase.Gameplay.Units.Logic.Parts.Team;
 using CodeBase.Infrastructure.Services.Logging;
 using CodeBase.Infrastructure.Services.UnitsProvider;
 using CodeBase.UI.Services.WindowsFactory;
@@ -40,7 +40,7 @@ namespace CodeBase.Gameplay.Services.TeamWinObserver
 
         private void OnUnitSpawned(Unit unit)
         {
-            TeamID unitTeamID = unit.Team.Current.Value;
+            TeamID unitTeamID = unit.Logic.Team.Current.Value;
             
             if (unitTeamID == _leftTeam)
             {
@@ -59,7 +59,7 @@ namespace CodeBase.Gameplay.Services.TeamWinObserver
 
         private void OnUnitRemoved(Unit unit)
         {
-            TeamID unitTeamID = unit.Team.Current.Value;
+            TeamID unitTeamID = unit.Logic.Team.Current.Value;
             
             if (unitTeamID == _leftTeam)
             {

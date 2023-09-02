@@ -2,7 +2,7 @@
 using CodeBase.Gameplay.Services.TeamWinObserver;
 using CodeBase.Gameplay.Services.UnitsSpawner;
 using CodeBase.Gameplay.Units;
-using CodeBase.Gameplay.Units.Parts.Team;
+using CodeBase.Gameplay.Units.Logic.Parts.Team;
 using CodeBase.Infrastructure.GameFSM.FSM;
 using CodeBase.Infrastructure.GameFSM.States.Base;
 

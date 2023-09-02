@@ -32,7 +32,7 @@ namespace CodeBase.Gameplay.Tiles
         public void ChangeOutLineColor(Color color) =>
             SetColor(_outlineColorID, color);
         
-        public void SwitchHighlight(bool isEnabled) =>
+        public void SwitchHighlight(bool isEnabled) => 
             SetBool(_enableHighLightID, isEnabled);
 
         public void ChangeHighlightColor(Color color) => 

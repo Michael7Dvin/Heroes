@@ -27,7 +27,11 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer
                 _activeUnitTileVisualizer,
                 staticDataProvider);
             
-            _tilesMovementVisualizer = new TilesMovementVisualizer(mapService, mover, tileSelector, staticDataProvider);
+            _tilesMovementVisualizer = new TilesMovementVisualizer(mapService,
+                mover,
+                tileSelector,
+                _activeUnitTileVisualizer,
+                staticDataProvider);
         }
 
         public void Enable()

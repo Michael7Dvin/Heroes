@@ -17,28 +17,8 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: a62f0c1aa798c8042aa6b153ac6094f5
   m_SerializeEntries:
-  - m_GUID: 099e6d6b0e7fb98489cfbcdcc3156160
-    m_Address: Archer
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 16f4c9c0b50939a4983d34a3dc55b40f
     m_Address: Knight
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 9a7c484fed6118345b2caf451ad93ad4
-    m_Address: Zombie
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: baaff2d29cd23f042a280f97903e4644
-    m_Address: Skeleton
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: e778f15191231374fbc932295f08919c
-    m_Address: SkeletonNecromancer
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

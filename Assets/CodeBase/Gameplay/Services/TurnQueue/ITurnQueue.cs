@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CodeBase.Gameplay.Units;
+using CodeBase.Gameplay.Units.Logic;
 
 namespace CodeBase.Gameplay.Services.TurnQueue
 {

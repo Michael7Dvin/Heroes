@@ -3,7 +3,8 @@ using CodeBase.Gameplay.Services.TileSelector;
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
-using CodeBase.Gameplay.Units.Parts.Team;
+using CodeBase.Gameplay.Units.Logic;
+using CodeBase.Gameplay.Units.Logic.Parts.Team;
 using CodeBase.Infrastructure.Services.StaticDataProvider;
 
 namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
@@ -54,7 +55,7 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         {
             if (tile.Logic.TryGetUnit(out Unit unit) == true)
             {
-                VisualizeUnitSelection(tile.View, unit);
+                VisualizeUnitSelection(tile.View, unit.Logic);
                 return;
             }
 
@@ -67,14 +68,14 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
             VisualizeEmptySelection(tile.View);
         }
 
-        private void VisualizeUnitSelection(TileView tileView, Unit unit)
+        private void VisualizeUnitSelection(TileView tileView, UnitLogic unitLogic)
         {
-            if (IsEnemy(unit.Team.Current.Value) == true)
+            if (IsEnemy(unitLogic.Team.Current.Value) == true)
             {
                 tileView.SwitchOutLine(true);
                 tileView.ChangeOutLineColor(_tileViewColors.AttackTargetOutline);
             }
-            else if (unit != _turnQueue.ActiveUnit)
+            else if (unitLogic != _turnQueue.ActiveUnit.Logic)
             {
                 tileView.SwitchOutLine(true);
                 tileView.ChangeOutLineColor(_tileViewColors.AllyOutline);
@@ -101,7 +102,7 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
 
         private bool IsEnemy(TeamID unitTeamID)
         {
-            TeamID activeUnitTeamID = _turnQueue.ActiveUnit.Team.Current.Value;
+            TeamID activeUnitTeamID = _turnQueue.ActiveUnit.Logic.Team.Current.Value;
 
             return activeUnitTeamID != unitTeamID;
         }
