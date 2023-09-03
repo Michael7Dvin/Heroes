@@ -5,6 +5,8 @@ using CodeBase.Gameplay.Services.PathFinder;
 using CodeBase.Gameplay.Services.TurnQueue;
 using CodeBase.Gameplay.Tiles;
 using CodeBase.Gameplay.Units;
+using CodeBase.Gameplay.Units.Logic;
+using CodeBase.Gameplay.Units.Logic.Parts.Mover;
 using CodeBase.Infrastructure.Services.Logging;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -67,7 +69,10 @@ namespace CodeBase.Gameplay.Services.Mover
 
             int pathDistance = pathCoordinates.Count;
             SetActiveUnitMovePoints(_activeUnitMovePoints - pathDistance);
-            UpdatePathFindingResults(activeUnit.Logic.Coordinates.Observable.Value, _activeUnitMovePoints);
+            
+            UpdatePathFindingResults(activeUnit.Logic.Coordinates.Observable.Value,
+                _activeUnitMovePoints,
+                activeUnit.Logic.Mover.IsMoveThroughObstacles);
             
             IsActiveUnitMoving = false;
         }
@@ -75,8 +80,8 @@ namespace CodeBase.Gameplay.Services.Mover
         private void SetActiveUnitMovePoints(int movePoints) => 
             _activeUnitMovePoints = movePoints;
 
-        private void UpdatePathFindingResults(Vector2Int startCoordinates, int movePoints) => 
-            _currentPathFindingResults.Value = _pathFinder.FindPathsByBFS(startCoordinates, movePoints);
+        private void UpdatePathFindingResults(Vector2Int startCoordinates, int movePoints, bool isFlying) => 
+            _currentPathFindingResults.Value = _pathFinder.CalculatePaths(startCoordinates, movePoints, isFlying);
 
         private async UniTask MoveUnitAlongPath(Unit unit, IReadOnlyList<Vector2Int> pathCoordinates)
         {
@@ -91,8 +96,13 @@ namespace CodeBase.Gameplay.Services.Mover
 
         private void OnTurnStarted(Unit activeUnit)
         {
-            SetActiveUnitMovePoints(activeUnit.Logic.Mover.MovePoints);
-            UpdatePathFindingResults(activeUnit.Logic.Coordinates.Observable.Value, activeUnit.Logic.Mover.MovePoints);
+            IUnitMover mover = activeUnit.Logic.Mover;
+            
+            SetActiveUnitMovePoints(mover.MovePoints);
+            
+            UpdatePathFindingResults(activeUnit.Logic.Coordinates.Observable.Value,
+                mover.MovePoints,
+                mover.IsMoveThroughObstacles);
         }
     }
 }

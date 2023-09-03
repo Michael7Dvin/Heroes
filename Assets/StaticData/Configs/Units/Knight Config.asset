@@ -16,3 +16,4 @@ MonoBehaviour:
   <MovePoints>k__BackingField: 5
   <Health>k__BackingField: 20
   <Damage>k__BackingField: 7
+  <AnimationMoveSpeed>k__BackingField: 2.5

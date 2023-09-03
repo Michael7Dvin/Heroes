@@ -81,6 +81,12 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         {
             foreach (TileView pathTileView in _visualizedPathTiles)
             {
+                if (_mover.CurrentPathFindingResults.Value.IsMovableAt(pathTileView.Coordinates) == false)
+                {
+                    pathTileView.SwitchHighlight(false);
+                    continue;
+                }
+                
                 pathTileView.SwitchHighlight(true);   
                 pathTileView.ChangeHighlightColor(_tileViewColors.MovableHighlight);   
             }

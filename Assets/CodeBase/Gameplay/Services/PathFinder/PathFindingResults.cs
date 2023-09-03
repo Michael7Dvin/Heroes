@@ -1,20 +1,28 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CodeBase.Gameplay.Tiles;
 using UnityEngine;
 
 namespace CodeBase.Gameplay.Services.PathFinder
 {
     public readonly struct PathFindingResults
     {
-        private readonly Dictionary<Vector2Int, Vector2Int?> _visitedTiles;
+        public readonly IReadOnlyDictionary<Vector2Int, Tile> Obstacles;
+        
+        private readonly Dictionary<Vector2Int, Vector2Int?> _paths;
 
-        public PathFindingResults(Dictionary<Vector2Int, Vector2Int?> visitedTiles)
+        public PathFindingResults(Dictionary<Vector2Int, Vector2Int?> paths,
+            IReadOnlyDictionary<Vector2Int, Tile> obstacles)
         {
-            _visitedTiles = visitedTiles;
+            _paths = paths;
+            Obstacles = obstacles;
         }
 
-        public IEnumerable<Vector2Int> WalkableCoordinates =>
-            _visitedTiles.Keys.Skip(1);
+        public IEnumerable<Vector2Int> WalkableCoordinates => 
+            _paths
+                .Keys
+                .Except(Obstacles.Keys)
+                .Skip(1);
 
         public bool IsMovableAt(Vector2Int coordinates) =>
             WalkableCoordinates.Contains(coordinates);
@@ -27,10 +35,10 @@ namespace CodeBase.Gameplay.Services.PathFinder
             Vector2Int current = coordinates;
             List<Vector2Int> path = new List<Vector2Int> { current };
 
-            while (_visitedTiles[current] != null)
+            while (_paths[current] != null)
             {
-                path.Add(_visitedTiles[current].Value);
-                current = _visitedTiles[current].Value;
+                path.Add(_paths[current].Value);
+                current = _paths[current].Value;
             }
             
             path.Reverse();

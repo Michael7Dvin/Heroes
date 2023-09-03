@@ -14,15 +14,16 @@ namespace CodeBase.Gameplay.Services.PathFinder
             _mapService = mapService;
         }
 
-        public PathFindingResults FindPathsByBFS(Vector2Int start, int maxDistance)
+        public PathFindingResults CalculatePaths(Vector2Int start, int maxDistance, bool isMoveThroughObstacles)
         {
-            Dictionary<Vector2Int, Vector2Int?> visited = new();
+            Dictionary<Vector2Int, Vector2Int?> paths = new();
             Dictionary<Vector2Int, int> distances = new();
+            Dictionary<Vector2Int, Tile> obstacles = new();
             Queue<Vector2Int> toVisit = new();
             
             toVisit.Enqueue(start);
             distances.Add(start, 0);
-            visited.Add(start, null);
+            paths.Add(start, null);
 
             while (toVisit.Count > 0)
             {
@@ -31,30 +32,37 @@ namespace CodeBase.Gameplay.Services.PathFinder
                 foreach (Tile neighbor in _mapService.GetNeighbors(calculatingTile))
                 {
                     Vector2Int neighborCoordinates = neighbor.View.Coordinates;
+                    bool isNeighborWalkable = neighbor.Logic.IsWalkable;
 
-                    if (neighbor.Logic.IsWalkable == false)
-                        continue;
+                    if (isNeighborWalkable == false)
+                    {
+                        obstacles[neighborCoordinates] = neighbor;
+
+                        if (isMoveThroughObstacles == false)
+                            continue;
+                    }
 
                     int distance = distances[calculatingTile] + 1;
 
                     if (distance <= maxDistance)
                     {
-                        if (visited.ContainsKey(neighborCoordinates) == false)
+                        if (paths.ContainsKey(neighborCoordinates) == false)
                         {
-                            visited[neighborCoordinates] = calculatingTile;
+                            paths[neighborCoordinates] = calculatingTile;
                             distances[neighborCoordinates] = distance;
                             toVisit.Enqueue(neighborCoordinates);
                         }
                         else if (distances[neighborCoordinates] > distance)
                         {
-                            visited[neighborCoordinates] = calculatingTile;
+                            paths[neighborCoordinates] = calculatingTile;
                             distances[neighborCoordinates] = distance;
                         }
                     }
                 }
             }
 
-            return new PathFindingResults(visited);
+            obstacles.Remove(start);
+            return new PathFindingResults(paths, obstacles);
         }
     }
 }
