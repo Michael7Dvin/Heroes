@@ -13,7 +13,7 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         private readonly ITurnQueue _turnQueue;
         private readonly IMapService _mapService;
         private readonly TileViewColorsConfig _tileViewColors;
-
+        
         private UnitLogic _activeUnitLogic;
 
         public ActiveUnitTileVisualizer(ITurnQueue turnQueue,
@@ -22,6 +22,7 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         {
             _turnQueue = turnQueue;
             _mapService = mapService;
+            
             _tileViewColors = staticDataProvider.Configs.TileViewColors;
         }
 

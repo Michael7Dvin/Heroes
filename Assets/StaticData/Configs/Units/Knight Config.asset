@@ -14,6 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Initiative>k__BackingField: 4
   <MovePoints>k__BackingField: 5
+  <IsMoveThroughObstacles>k__BackingField: 0
   <Health>k__BackingField: 20
-  <Damage>k__BackingField: 7
+  <AttackDamage>k__BackingField: 5
+  <AttackDistance>k__BackingField: 2
+  <IsRanged>k__BackingField: 0
   <AnimationMoveSpeed>k__BackingField: 2.5

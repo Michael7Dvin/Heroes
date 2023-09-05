@@ -28,8 +28,8 @@ namespace CodeBase.Gameplay.Services.TeamWinObserver
 
         public void Initialize()
         {
-            _unitsProvider.Added += OnUnitSpawned;
-            _unitsProvider.Removed += OnUnitRemoved;
+            _unitsProvider.Spawned += OnUnitSpawned;
+            _unitsProvider.Died += OnUnitDied;
         }
         
         public void Reset(TeamID leftTeam, TeamID rightTeam)
@@ -57,7 +57,7 @@ namespace CodeBase.Gameplay.Services.TeamWinObserver
             _logger.LogError($"Unable to process spawned unit. Unexpected {nameof(TeamID)}: {unitTeamID}");
         }
 
-        private void OnUnitRemoved(Unit unit)
+        private void OnUnitDied(Unit unit)
         {
             TeamID unitTeamID = unit.Logic.Team.Current.Value;
             
@@ -107,8 +107,8 @@ namespace CodeBase.Gameplay.Services.TeamWinObserver
             _leftTeamUnits = 0;
             _rightTeamUnits = 0;
             
-            _unitsProvider.Added -= OnUnitSpawned;
-            _unitsProvider.Removed -= OnUnitRemoved;
+            _unitsProvider.Spawned -= OnUnitSpawned;
+            _unitsProvider.Died -= OnUnitDied;
         }
     }
 }

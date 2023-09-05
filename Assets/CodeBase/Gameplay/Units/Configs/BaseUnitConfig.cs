@@ -10,6 +10,9 @@ namespace CodeBase.Gameplay.Units.Configs
         [field: SerializeField] public bool IsMoveThroughObstacles { get; private set; }
 
         [field: SerializeField] public int Health { get; private set; }
-        [field: SerializeField] public int Damage { get; private set; }
+        
+        [field: SerializeField] public int AttackDamage { get; private set; }
+        [field: SerializeField] public int AttackDistance { get; private set; }
+        [field: SerializeField] public bool IsRanged { get; private set; }
     }
 }

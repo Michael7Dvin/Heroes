@@ -34,10 +34,10 @@ namespace CodeBase.Gameplay.Services.TileSelector
 
         private void SelectTile(float deltaTime)
         {
-            if (TryRaycast(out TileView tileView))
+            if (TryRaycast(out Tile tileView))
             {
                 _previousTile.Value = _currentTile.Value;
-                _currentTile.Value = _mapService.GetTile(tileView.Coordinates);
+                _currentTile.Value = _mapService.GetTile(tileView.Logic.Coordinates);
             }
             else
             {
@@ -46,7 +46,7 @@ namespace CodeBase.Gameplay.Services.TileSelector
             }
         }
 
-        private bool TryRaycast(out TileView tileView)
+        private bool TryRaycast(out Tile tileView)
         {
             RaycastHit2D hit = Physics2D.Raycast(_inputService.MouseCursorWorldPosition, Vector2.zero);
             

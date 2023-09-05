@@ -1,4 +1,5 @@
-﻿using CodeBase.Gameplay.Services.MapGenerator;
+﻿using CodeBase.Gameplay.Services.Attacker;
+using CodeBase.Gameplay.Services.MapGenerator;
 using CodeBase.Gameplay.Services.MapService;
 using CodeBase.Gameplay.Services.Mover;
 using CodeBase.Gameplay.Services.PathFinder;
@@ -29,6 +30,7 @@ namespace CodeBase.Infrastructure.Installers
             Container.Bind<IWinService>().To<WinService>().AsSingle();
             Container.Bind<IPathFinder>().To<PathFinder>().AsSingle();
             Container.Bind<IMover>().To<Mover>().AsSingle();
+            Container.Bind<IAttacker>().To<Attacker>().AsSingle();
         }
 
         private void BindMapServices()

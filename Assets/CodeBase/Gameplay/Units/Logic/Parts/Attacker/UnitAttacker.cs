@@ -8,11 +8,16 @@ namespace CodeBase.Gameplay.Units.Logic.Parts.Attacker
         private readonly int _damage;
         private readonly UnitStack _unitStack;
 
-        public UnitAttacker(int damage, UnitStack unitStack)
+        public UnitAttacker(int damage, UnitStack unitStack, int attackDistance, bool isRanged)
         {
             _damage = damage;
             _unitStack = unitStack;
+            AttackDistance = attackDistance;
+            IsRanged = isRanged;
         }
+
+        public int AttackDistance { get; }
+        public bool IsRanged { get; }
 
         public void Attack(IUnitHealth attackedUnitHealth)
         {

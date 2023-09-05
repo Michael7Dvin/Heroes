@@ -8,6 +8,7 @@ using CodeBase.Gameplay.Units;
 using CodeBase.Gameplay.Units.Logic;
 using CodeBase.Gameplay.Units.Logic.Parts.Mover;
 using CodeBase.Infrastructure.Services.Logging;
+using CodeBase.Infrastructure.Services.UnitsProvider;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -15,17 +16,23 @@ namespace CodeBase.Gameplay.Services.Mover
 {
     public class Mover : IMover
     {
+        private readonly IUnitsProvider _unitsProvider;
         private readonly IPathFinder _pathFinder;
         private readonly ITurnQueue _turnQueue;
         private readonly IMapService _mapService;
         private readonly ICustomLogger _logger;
-
+        
         private readonly Observable<PathFindingResults> _currentPathFindingResults = new();
 
         private int _activeUnitMovePoints;
 
-        public Mover(IPathFinder pathFinder, ITurnQueue turnQueue, IMapService mapService, ICustomLogger logger)
+        public Mover(IUnitsProvider unitsProvider,
+            IPathFinder pathFinder,
+            ITurnQueue turnQueue,
+            IMapService mapService,
+            ICustomLogger logger)
         {
+            _unitsProvider = unitsProvider;
             _pathFinder = pathFinder;
             _turnQueue = turnQueue;
             _mapService = mapService;
@@ -35,26 +42,32 @@ namespace CodeBase.Gameplay.Services.Mover
         public IReadOnlyObservable<PathFindingResults> CurrentPathFindingResults => _currentPathFindingResults;
         public bool IsActiveUnitMoving { get; private set; }
 
-        public void Enable() => 
+        public void Enable()
+        {
             _turnQueue.NewTurnStarted += OnTurnStarted;
+            _mapService.TileChanged += OnMapTileChanged;
+        }
 
-        public void Disable() => 
+        public void Disable()
+        {
             _turnQueue.NewTurnStarted -= OnTurnStarted;
+            _mapService.TileChanged -= OnMapTileChanged;
+        }
 
         public bool IsMovableAt(Tile tile) =>
-            _currentPathFindingResults.Value.IsMovableAt(tile.View.Coordinates);
+            _currentPathFindingResults.Value.IsMovableAt(tile.Logic.Coordinates);
 
         public async void MoveActiveUnit(Tile tile)
         {
             if (IsMovableAt(tile) == false)
             {
-                _logger.LogError($"Unable to move active unit. Can't find path to {nameof(Tile)} at: '{tile.View.Coordinates}'");
+                _logger.LogError($"Unable to move active unit. Can't find path to {nameof(Tile)} at: '{tile.Logic.Coordinates}'");
                 return;
             }
 
             IsActiveUnitMoving = true;
             
-            Vector2Int destination = tile.View.Coordinates;
+            Vector2Int destination = tile.Logic.Coordinates;
             List<Vector2Int> pathCoordinates = _currentPathFindingResults.Value.GetPathTo(destination);
 
             Unit activeUnit = _turnQueue.ActiveUnit;
@@ -89,7 +102,7 @@ namespace CodeBase.Gameplay.Services.Mover
             Vector3[] pathPositions = new Vector3[pointsCount]; 
             
             for (int i = 0; i < pointsCount; i++)
-                pathPositions[i] = _mapService.GetTile(pathCoordinates[i]).View.transform.position;
+                pathPositions[i] = _mapService.GetTile(pathCoordinates[i]).transform.position;
 
             await unit.View.PathMoveAnimator.MoveAlongPath(pathPositions);
         }
@@ -103,6 +116,15 @@ namespace CodeBase.Gameplay.Services.Mover
             UpdatePathFindingResults(activeUnit.Logic.Coordinates.Observable.Value,
                 mover.MovePoints,
                 mover.IsMoveThroughObstacles);
+        }
+
+        private void OnMapTileChanged(Tile tile)
+        {
+            UnitLogic activeUnitLogic = _turnQueue.ActiveUnit.Logic; 
+            
+            UpdatePathFindingResults(activeUnitLogic.Coordinates.Observable.Value,
+                _activeUnitMovePoints,
+                activeUnitLogic.Mover.IsMoveThroughObstacles);
         }
     }
 }

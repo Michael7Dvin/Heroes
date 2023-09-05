@@ -6,8 +6,9 @@ namespace CodeBase.Infrastructure.Services.UnitsProvider
 {
     public interface IUnitsProvider
     {
-        event Action<Unit> Added;
-        event Action<Unit> Removed;
+        event Action UnitsAmountChanged; 
+        event Action<Unit> Spawned;
+        event Action<Unit> Died;
 
         void Add(Unit unit);
     }

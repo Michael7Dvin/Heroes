@@ -1,14 +1,23 @@
-﻿namespace CodeBase.Gameplay.Tiles
+﻿using UnityEngine;
+
+namespace CodeBase.Gameplay.Tiles
 {
-    public class Tile
+    [RequireComponent(typeof(SpriteRenderer), typeof(PolygonCollider2D))]
+    public class Tile : MonoBehaviour
     {
-        public Tile(TileLogic logic, TileView view)
+        public void Construct(TileLogic logic)
         {
             Logic = logic;
-            View = view;
+            
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            Material material = spriteRenderer.material;
+            View = new TileView(material);
         }
+        
+        public TileView View { get; private set; }
+        public TileLogic Logic { get; private set; }
 
-        public TileLogic Logic { get; }
-        public TileView View { get; }
+        private void OnDestroy() => 
+            Logic.CleanUp();
     }
 }

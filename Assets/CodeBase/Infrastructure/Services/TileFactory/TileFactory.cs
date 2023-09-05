@@ -28,14 +28,15 @@ namespace CodeBase.Infrastructure.Services.TileFactory
 
         public async UniTask<Tile> Create(Vector3 position, Vector2Int coordinates, bool isWalkable)
         {
-            TileView prefab = await _addressablesLoader.LoadComponent<TileView>(_tileAddress);
-            TileView view = _instantiator.InstantiatePrefabForComponent<TileView>(prefab, position, Quaternion.identity);
-            view.Construct(coordinates);
-            
+            Tile prefab = await _addressablesLoader.LoadComponent<Tile>(_tileAddress);
+            Tile tile = _instantiator.InstantiatePrefabForComponent<Tile>(prefab, position, Quaternion.identity);
+
             TileLogic logic = _instantiator.Instantiate<TileLogic>();
-            logic.Construct(isWalkable);
+            logic.Construct(coordinates, isWalkable);
             
-            return new Tile(logic, view);
+            tile.Construct(logic);
+
+            return tile;
         }
     }
 }

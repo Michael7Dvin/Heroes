@@ -17,7 +17,23 @@ MonoBehaviour:
     <UnitType>k__BackingField: 0
     <Amount>k__BackingField: 20
     <TeamID>k__BackingField: 0
-  - <Coordinates>k__BackingField: {x: 14, y: 10}
+  - <Coordinates>k__BackingField: {x: 0, y: 1}
+    <UnitType>k__BackingField: 0
+    <Amount>k__BackingField: 20
+    <TeamID>k__BackingField: 0
+  - <Coordinates>k__BackingField: {x: 0, y: 2}
+    <UnitType>k__BackingField: 0
+    <Amount>k__BackingField: 20
+    <TeamID>k__BackingField: 0
+  - <Coordinates>k__BackingField: {x: 4, y: 0}
+    <UnitType>k__BackingField: 0
+    <Amount>k__BackingField: 20
+    <TeamID>k__BackingField: 1
+  - <Coordinates>k__BackingField: {x: 4, y: 1}
+    <UnitType>k__BackingField: 0
+    <Amount>k__BackingField: 20
+    <TeamID>k__BackingField: 1
+  - <Coordinates>k__BackingField: {x: 4, y: 2}
     <UnitType>k__BackingField: 0
     <Amount>k__BackingField: 20
     <TeamID>k__BackingField: 1

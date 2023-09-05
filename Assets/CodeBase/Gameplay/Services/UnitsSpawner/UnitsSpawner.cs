@@ -42,10 +42,10 @@ namespace CodeBase.Gameplay.Services.UnitsSpawner
                 return null;
             }
 
-            Vector3 tilePosition = tile.View.transform.position;
+            Vector3 tilePosition = tile.transform.position;
             
             Unit unit = await _factory.Create(tilePosition, unitType, unitsAmount, teamID);
-            unit.Logic.Coordinates.Set(tile.View.Coordinates);
+            unit.Logic.Coordinates.Set(tile.Logic.Coordinates);
             tile.Logic.Occupy(unit);
             _provider.Add(unit);
 

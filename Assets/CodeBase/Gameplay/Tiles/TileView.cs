@@ -2,30 +2,20 @@
 
 namespace CodeBase.Gameplay.Tiles
 {
-    [RequireComponent(typeof(SpriteRenderer), typeof(PolygonCollider2D))]
-    public class TileView : MonoBehaviour
+    public class TileView
     {
         private readonly int _enableOutlineID = Shader.PropertyToID("_EnableOutline");
         private readonly int _outlineColorID = Shader.PropertyToID("_OutlineColor");
         private readonly int _enableHighLightID = Shader.PropertyToID("_EnableHighlight");
         private readonly int _highlightColorID = Shader.PropertyToID("_HighlightColor");
 
-        private SpriteRenderer _renderer;
-        private Material _tileMaterial;
+        private readonly Material _tileMaterial;
+
+        public TileView(Material material)
+        {
+            _tileMaterial = material;
+        }
         
-        public void Construct(Vector2Int coordinates)
-        {
-            Coordinates = coordinates;
-        }
-
-        public Vector2Int Coordinates { get; private set; }
-
-        private void Awake()
-        {
-            _renderer = GetComponent<SpriteRenderer>();
-            _tileMaterial = _renderer.material;
-        }
-
         public void SwitchOutLine(bool isEnabled) => 
             SetBool(_enableOutlineID, isEnabled);
 

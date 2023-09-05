@@ -68,7 +68,7 @@ namespace CodeBase.Infrastructure.Services.UnitFactory
             UnitCoordinates coordinates = new();
             UnitStack stack = new(stackAmount);
             UnitMover mover = new UnitMover(config.MovePoints, config.IsMoveThroughObstacles);
-            UnitAttacker attacker = new(config.Damage, stack);
+            UnitAttacker attacker = new(config.AttackDamage, stack, config.AttackDistance, config.IsRanged);
             UnitHealth health = new(config.Health, stack);
             UnitDeath death = new(stack);
 

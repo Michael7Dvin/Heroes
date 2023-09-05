@@ -29,14 +29,14 @@ namespace CodeBase.Gameplay.Services.TurnQueue
 
         public void Initialize()
         {
-            _unitsProvider.Added += Add;
-            _unitsProvider.Removed += Remove;
+            _unitsProvider.Spawned += Add;
+            _unitsProvider.Died += Remove;
         }
         
         public void CleanUp()
         {
-            _unitsProvider.Added -= Add;
-            _unitsProvider.Removed -= Remove;
+            _unitsProvider.Spawned -= Add;
+            _unitsProvider.Died -= Remove;
             
             _units.Clear();
             _activeUnitNode = null;

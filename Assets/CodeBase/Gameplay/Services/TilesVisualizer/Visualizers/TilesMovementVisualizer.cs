@@ -18,7 +18,7 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         private readonly TileViewColorsConfig _tileViewColors;
 
         private readonly List<TileView> _visualizedMovableTiles = new();
-        private readonly List<TileView> _visualizedPathTiles = new();
+        private readonly List<Tile> _visualizedPathTiles = new();
 
         public TilesMovementVisualizer(IMapService mapService,
             IMover mover,
@@ -66,29 +66,31 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
 
         private void VisualizePath(Tile tile)
         {
-            List<Vector2Int> coordinates = _mover.CurrentPathFindingResults.Value.GetPathTo(tile.View.Coordinates);
+            List<Vector2Int> coordinates = _mover.CurrentPathFindingResults.Value.GetPathTo(tile.Logic.Coordinates);
 
             foreach (Vector2Int coordinate in coordinates)
             {
-                TileView pathTileView = _mapService.GetTile(coordinate).View;
-                pathTileView.SwitchHighlight(true);
-                pathTileView.ChangeHighlightColor(_tileViewColors.PathHighlight);
-                _visualizedPathTiles.Add(pathTileView);
+                Tile pathTile = _mapService.GetTile(coordinate);
+                pathTile.View.SwitchHighlight(true);
+                pathTile.View.ChangeHighlightColor(_tileViewColors.PathHighlight);
+                _visualizedPathTiles.Add(pathTile);
             }
         }
 
         private void VisualizePathAsMovable()
         {
-            foreach (TileView pathTileView in _visualizedPathTiles)
+            foreach (Tile pathTile in _visualizedPathTiles)
             {
-                if (_mover.CurrentPathFindingResults.Value.IsMovableAt(pathTileView.Coordinates) == false)
+                TileView view = pathTile.View;
+                
+                if (_mover.CurrentPathFindingResults.Value.IsMovableAt(pathTile.Logic.Coordinates) == false)
                 {
-                    pathTileView.SwitchHighlight(false);
+                    view.SwitchHighlight(false);
                     continue;
                 }
                 
-                pathTileView.SwitchHighlight(true);   
-                pathTileView.ChangeHighlightColor(_tileViewColors.MovableHighlight);   
+                view.SwitchHighlight(true);   
+                view.ChangeHighlightColor(_tileViewColors.MovableHighlight);   
             }
             
             _visualizedPathTiles.Clear();
@@ -96,8 +98,8 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
 
         private void ClearPathVisualization()
         {
-            foreach (TileView pathTileView in _visualizedPathTiles) 
-                pathTileView.SwitchHighlight(false);
+            foreach (Tile pathTile in _visualizedPathTiles) 
+                pathTile.View.SwitchHighlight(false);
 
             _visualizedPathTiles.Clear();
         }
@@ -126,6 +128,6 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         }
 
         private bool IsWalkable(Tile tile) => 
-            _mover.CurrentPathFindingResults.Value.IsMovableAt(tile.View.Coordinates);
+            _mover.CurrentPathFindingResults.Value.IsMovableAt(tile.Logic.Coordinates);
     }
 }

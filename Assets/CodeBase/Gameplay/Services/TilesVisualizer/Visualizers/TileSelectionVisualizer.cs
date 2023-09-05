@@ -53,9 +53,11 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
 
         private void VisualiseSelection(Tile tile)
         {
-            if (tile.Logic.TryGetUnit(out Unit unit) == true)
+            if (tile.Logic.IsOccupied == true)
             {
-                VisualizeUnitSelection(tile.View, unit.Logic);
+                Unit tileUnit = tile.Logic.Unit;
+                
+                VisualizeUnitSelection(tile.View, tileUnit.Logic);
                 return;
             }
 
@@ -108,6 +110,6 @@ namespace CodeBase.Gameplay.Services.TilesVisualizer.Visualizers
         }
         
         private bool IsWalkable(Tile tile) => 
-            _mover.CurrentPathFindingResults.Value.IsMovableAt(tile.View.Coordinates);
+            _mover.CurrentPathFindingResults.Value.IsMovableAt(tile.Logic.Coordinates);
     }
 }

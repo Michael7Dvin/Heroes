@@ -31,18 +31,18 @@ namespace CodeBase.Gameplay.Services.PathFinder
 
                 foreach (Tile neighbor in _mapService.GetNeighbors(calculatingTile))
                 {
-                    Vector2Int neighborCoordinates = neighbor.View.Coordinates;
+                    Vector2Int neighborCoordinates = neighbor.Logic.Coordinates;
                     bool isNeighborWalkable = neighbor.Logic.IsWalkable;
+                    int distance = distances[calculatingTile] + 1;
 
                     if (isNeighborWalkable == false)
                     {
-                        obstacles[neighborCoordinates] = neighbor;
+                        if (distance <= maxDistance)
+                            obstacles[neighborCoordinates] = neighbor;
 
                         if (isMoveThroughObstacles == false)
                             continue;
                     }
-
-                    int distance = distances[calculatingTile] + 1;
 
                     if (distance <= maxDistance)
                     {

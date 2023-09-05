@@ -1,4 +1,5 @@
-﻿using CodeBase.Gameplay.Services.Mover;
+﻿using CodeBase.Gameplay.Services.Attacker;
+using CodeBase.Gameplay.Services.Mover;
 using CodeBase.Gameplay.Services.TileInteractor;
 using CodeBase.Gameplay.Services.TileSelector;
 using CodeBase.Gameplay.Services.TilesVisualizer;
@@ -13,18 +14,21 @@ namespace CodeBase.Infrastructure.GameFSM.States
         private readonly ITileInteractor _tileInteractor;
         private readonly ITilesVisualizer _tilesVisualizer;
         private readonly IMover _mover;
+        private readonly IAttacker _attacker;
         private readonly ITurnQueue _turnQueue;
 
         public GameplayState(ITileSelector tileSelector,
             ITileInteractor tileInteractor,
             ITilesVisualizer tilesVisualizer,
             IMover mover,
+            IAttacker attacker,
             ITurnQueue turnQueue)
         {
             _tileSelector = tileSelector;
             _tileInteractor = tileInteractor;
             _tilesVisualizer = tilesVisualizer;
             _mover = mover;
+            _attacker = attacker;
             _turnQueue = turnQueue;
         }
 
@@ -34,6 +38,7 @@ namespace CodeBase.Infrastructure.GameFSM.States
             _tileInteractor.Enable();
             _tilesVisualizer.Enable();
             _mover.Enable();
+            _attacker.Enable();
             
             _turnQueue.SetFirstTurn();
         }
@@ -44,7 +49,8 @@ namespace CodeBase.Infrastructure.GameFSM.States
             _tileInteractor.Disable();
             _tilesVisualizer.Disable();
             _mover.Disable();
-            
+            _attacker.Disable();
+
             _turnQueue.CleanUp();
         }
     }
